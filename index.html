@@ -18,46 +18,87 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8px;
+            padding: 4px;
             transition: all 0.3s ease;
+            overflow: hidden;
         }
 
         .timer-container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
-            max-width: 280px;
-            min-width: 200px;
-            padding: 20px 16px;
+            max-width: 320px;
+            min-width: 150px;
+            padding: 16px 12px;
             text-align: center;
+            position: relative;
         }
 
         .header {
-            font-size: 14px;
+            font-size: clamp(10px, 3vw, 14px);
             font-weight: 600;
             color: #374151;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             letter-spacing: -0.025em;
         }
 
         .timer-display {
-            font-size: clamp(2rem, 8vw, 2.5rem);
+            font-size: clamp(1.2rem, 6vw, 2.2rem);
             font-weight: 700;
             color: #1f2937;
-            margin: 16px 0;
+            margin: 12px 0;
             font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
             letter-spacing: -0.02em;
             line-height: 1;
+            cursor: pointer;
+            user-select: all;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .timer-display:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .time-input {
+            display: none;
+            font-size: clamp(1.2rem, 6vw, 2.2rem);
+            font-weight: 700;
+            color: #1f2937;
+            margin: 12px 0;
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            background: transparent;
+            border: 2px solid #3b82f6;
+            border-radius: 6px;
+            padding: 4px 8px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .time-input:focus {
+            outline: none;
+            border-color: #1d4ed8;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .edit-hint {
+            font-size: clamp(8px, 2vw, 10px);
+            color: #6b7280;
+            margin-top: 4px;
+            opacity: 0.7;
         }
 
         .status-indicator {
-            height: 4px;
+            height: 3px;
             background: #e5e7eb;
             border-radius: 2px;
-            margin: 12px 0;
+            margin: 10px 0;
             overflow: hidden;
         }
 
@@ -71,18 +112,29 @@
 
         .controls {
             display: flex;
-            gap: 8px;
-            margin: 16px 0 12px 0;
+            gap: 6px;
+            margin: 12px 0 8px 0;
             flex-wrap: wrap;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            margin-bottom: 6px;
+        }
+
+        .control-row:last-child {
+            margin-bottom: 0;
         }
 
         button {
             flex: 1;
             min-width: 0;
-            padding: 10px 8px;
+            padding: clamp(6px, 2vw, 10px) clamp(4px, 2vw, 8px);
             border: none;
-            border-radius: 8px;
-            font-size: 12px;
+            border-radius: 6px;
+            font-size: clamp(9px, 2.5vw, 12px);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -97,7 +149,7 @@
 
         .start-btn:hover:not(:disabled) {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
         }
 
         .start-btn:disabled {
@@ -112,7 +164,7 @@
 
         .stop-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
         }
 
         .reset-btn {
@@ -122,28 +174,39 @@
 
         .reset-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+            box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+        }
+
+        .beep-btn {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            width: 100%;
+        }
+
+        .beep-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
         }
 
         .status-text {
-            font-size: 11px;
+            font-size: clamp(8px, 2.5vw, 11px);
             color: #6b7280;
-            margin: 8px 0;
-            min-height: 16px;
+            margin: 6px 0;
+            min-height: 14px;
         }
 
         .warning-message {
             background: linear-gradient(135deg, #fef3c7, #fde68a);
             border: 1px solid #f59e0b;
-            border-radius: 8px;
+            border-radius: 6px;
             padding: 12px 8px;
-            margin: 12px 0;
+            margin: 8px 0;
             display: none;
             animation: pulse-warning 2s infinite;
         }
 
         .warning-text {
-            font-size: 12px;
+            font-size: clamp(10px, 2.5vw, 12px);
             font-weight: 700;
             color: #92400e;
             text-transform: uppercase;
@@ -151,15 +214,12 @@
         }
 
         .warning-hebrew {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: clamp(26px, 5vw, 32px);
+            font-weight: 800;
             color: #92400e;
             direction: rtl;
-            margin-top: 4px;
-        }
-
-        .milestones {
-            display: none;
+            margin-top: 6px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         /* Background states */
@@ -187,7 +247,7 @@
 
         @keyframes pulse-warning {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+            50% { transform: scale(1.01); }
         }
 
         .critical .timer-display {
@@ -197,107 +257,99 @@
 
         .critical .timer-container {
             border: 1px solid #ef4444;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
         }
 
         @keyframes pulse-critical {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
         }
 
-        /* Compact mode for very small widths */
-        @media (max-width: 240px) {
+        /* Ultra-responsive design */
+        @media (max-width: 200px) {
             .timer-container {
-                padding: 12px 8px;
-                max-width: none;
-            }
-
-            .header {
-                font-size: 12px;
-                margin-bottom: 12px;
-            }
-
-            .timer-display {
-                font-size: 1.5rem;
-                margin: 12px 0;
-            }
-
-            button {
-                font-size: 10px;
                 padding: 8px 6px;
+                border-radius: 8px;
             }
 
             .controls {
                 flex-direction: column;
-                gap: 6px;
-            }
-
-            .warning-text {
-                font-size: 10px;
-            }
-
-            .warning-hebrew {
-                font-size: 11px;
-            }
-        }
-
-        /* Ultra-compact mode for extremely small widths */
-        @media (max-width: 180px) {
-            .timer-container {
-                padding: 8px 6px;
-            }
-
-            .header {
-                font-size: 11px;
-                margin-bottom: 8px;
-            }
-
-            .timer-display {
-                font-size: 1.25rem;
-                margin: 8px 0;
+                gap: 4px;
             }
 
             button {
-                font-size: 9px;
+                font-size: 8px;
                 padding: 6px 4px;
-            }
-
-            .status-text {
-                font-size: 9px;
-            }
-
-            .warning-message {
-                padding: 8px 6px;
-                margin: 8px 0;
             }
         }
 
-        /* Vertical layout optimization */
-        @media (max-height: 400px) {
+        @media (max-height: 300px) {
             body {
-                padding: 4px;
+                padding: 2px;
             }
 
             .timer-container {
-                padding: 12px 16px;
+                padding: 8px 10px;
             }
 
             .timer-display {
-                margin: 8px 0;
+                margin: 6px 0;
             }
 
             .controls {
-                margin: 8px 0;
+                margin: 6px 0;
+            }
+
+            .warning-message {
+                padding: 4px 6px;
+                margin: 4px 0;
             }
         }
 
-        /* Hide scrollbars but keep functionality */
-        body {
-            overflow: hidden;
+        /* Extreme compactness for very small screens */
+        @media (max-width: 150px) {
+            .header {
+                font-size: 8px;
+                margin-bottom: 6px;
+            }
+
+            .timer-display {
+                font-size: 1rem;
+                margin: 6px 0;
+            }
+
+            .status-indicator {
+                height: 2px;
+                margin: 6px 0;
+            }
+
+            button {
+                font-size: 7px;
+                padding: 4px 2px;
+            }
+
+            .warning-text {
+                font-size: 8px;
+            }
+
+            .warning-hebrew {
+                font-size: 14px;
+            }
         }
 
-        .timer-container {
-            overflow: visible;
+        /* Prevent text selection except for timer display */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .timer-display {
+            -webkit-user-select: all;
+            -moz-user-select: all;
+            -ms-user-select: all;
+            user-select: all;
         }
     </style>
 </head>
@@ -305,16 +357,23 @@
     <div class="timer-container">
         <div class="header">VISIT TIMER</div>
         
-        <div class="timer-display" id="timerDisplay">00:00.00</div>
+        <div class="timer-display" id="timerDisplay" title="Click to edit time">00:00.00</div>
+        <input type="text" class="time-input" id="timeInput" placeholder="MM:SS">
+        <div class="edit-hint">Click timer to edit</div>
         
         <div class="status-indicator">
             <div class="status-fill" id="statusFill"></div>
         </div>
         
         <div class="controls">
-            <button class="start-btn" id="startBtn">START</button>
-            <button class="stop-btn" id="stopBtn">PAUSE</button>
-            <button class="reset-btn" id="resetBtn">RESET</button>
+            <div class="control-row">
+                <button class="start-btn" id="startBtn">START</button>
+                <button class="stop-btn" id="stopBtn">PAUSE</button>
+                <button class="reset-btn" id="resetBtn">RESET</button>
+            </div>
+            <div class="control-row">
+                <button class="beep-btn" id="beepBtn">🔊 ALERT DOCTOR</button>
+            </div>
         </div>
         
         <div class="status-text" id="status">Ready</div>
@@ -322,13 +381,6 @@
         <div class="warning-message" id="warningMessage">
             <div class="warning-text">TIME TO GO</div>
             <div class="warning-hebrew">הזמן ללכת</div>
-        </div>
-        
-        <div class="milestones">
-            <div id="milestone30">30min</div>
-            <div id="milestone40">40min</div>
-            <div id="milestone45">45min</div>
-            <div id="milestone60">60min</div>
         </div>
     </div>
 
@@ -339,11 +391,14 @@
                 this.elapsedTime = 0;
                 this.timerInterval = null;
                 this.isRunning = false;
+                this.isEditing = false;
                 
                 this.timerDisplay = document.getElementById('timerDisplay');
+                this.timeInput = document.getElementById('timeInput');
                 this.startBtn = document.getElementById('startBtn');
                 this.stopBtn = document.getElementById('stopBtn');
                 this.resetBtn = document.getElementById('resetBtn');
+                this.beepBtn = document.getElementById('beepBtn');
                 this.status = document.getElementById('status');
                 this.statusFill = document.getElementById('statusFill');
                 this.warningMessage = document.getElementById('warningMessage');
@@ -364,6 +419,103 @@
                 this.startBtn.addEventListener('click', () => this.start());
                 this.stopBtn.addEventListener('click', () => this.stop());
                 this.resetBtn.addEventListener('click', () => this.reset());
+                this.beepBtn.addEventListener('click', () => this.manualAlert());
+                
+                // Timer editing functionality
+                this.timerDisplay.addEventListener('click', () => this.startEditing());
+                this.timeInput.addEventListener('blur', () => this.finishEditing());
+                this.timeInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        this.finishEditing();
+                    } else if (e.key === 'Escape') {
+                        this.cancelEditing();
+                    }
+                });
+                
+                // Prevent accidental navigation
+                window.addEventListener('beforeunload', (e) => {
+                    if (this.isRunning) {
+                        e.preventDefault();
+                        e.returnValue = 'Timer is running. Are you sure you want to leave?';
+                    }
+                });
+            }
+            
+            startEditing() {
+                if (this.isRunning) return; // Don't allow editing while running
+                
+                this.isEditing = true;
+                this.timerDisplay.style.display = 'none';
+                this.timeInput.style.display = 'block';
+                
+                // Convert current time to MM:SS format for editing
+                const totalSeconds = Math.floor(this.elapsedTime / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                this.timeInput.value = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                this.timeInput.focus();
+                this.timeInput.select();
+            }
+            
+            finishEditing() {
+                if (!this.isEditing) return;
+                
+                const timeValue = this.timeInput.value.trim();
+                const timeRegex = /^(\d{1,3}):([0-5]?\d)$/;
+                const match = timeValue.match(timeRegex);
+                
+                if (match) {
+                    const minutes = parseInt(match[1]);
+                    const seconds = parseInt(match[2]);
+                    this.elapsedTime = (minutes * 60 + seconds) * 1000;
+                    this.updateDisplay();
+                    this.updateProgressBar();
+                    this.checkAlertsOnTimeChange();
+                }
+                
+                this.cancelEditing();
+            }
+            
+            cancelEditing() {
+                this.isEditing = false;
+                this.timerDisplay.style.display = 'block';
+                this.timeInput.style.display = 'none';
+            }
+            
+            checkAlertsOnTimeChange() {
+                // Reset alerts and re-check based on new time
+                Object.keys(this.alertsTriggered).forEach(key => {
+                    this.alertsTriggered[key] = false;
+                });
+                
+                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
+                
+                // Apply visual states without sound
+                if (minutes >= 60) {
+                    this.body.className = 'critical';
+                    this.warningMessage.style.display = 'block';
+                    this.alertsTriggered[30] = true;
+                    this.alertsTriggered[40] = true;
+                    this.alertsTriggered[45] = true;
+                    this.alertsTriggered[60] = true;
+                } else if (minutes >= 45) {
+                    this.body.className = 'danger';
+                    this.warningMessage.style.display = 'block';
+                    this.alertsTriggered[30] = true;
+                    this.alertsTriggered[40] = true;
+                    this.alertsTriggered[45] = true;
+                } else if (minutes >= 40) {
+                    this.body.className = 'warning';
+                    this.warningMessage.style.display = 'block';
+                    this.alertsTriggered[30] = true;
+                    this.alertsTriggered[40] = true;
+                } else if (minutes >= 30) {
+                    this.body.className = 'warning';
+                    this.alertsTriggered[30] = true;
+                } else {
+                    this.body.className = 'normal';
+                    this.warningMessage.style.display = 'none';
+                }
             }
             
             start() {
@@ -418,9 +570,8 @@
                 const totalSeconds = Math.floor(totalMilliseconds / 1000);
                 const minutes = Math.floor(totalSeconds / 60);
                 const seconds = totalSeconds % 60;
-                const milliseconds = Math.floor((totalMilliseconds % 1000) / 10); // Show centiseconds (10ms precision)
+                const milliseconds = Math.floor((totalMilliseconds % 1000) / 10);
                 
-                // Show hours only if over 60 minutes
                 if (minutes >= 60) {
                     const hours = Math.floor(minutes / 60);
                     const displayMinutes = minutes % 60;
@@ -459,52 +610,48 @@
                 if (minutes >= 30 && !this.alertsTriggered[30]) {
                     this.body.className = 'warning';
                     this.alertsTriggered[30] = true;
-                    this.playSound();
+                    this.playBeeps(1); // 1 beep for 30 minutes
                 }
                 
                 if (minutes >= 40 && !this.alertsTriggered[40]) {
                     this.warningMessage.style.display = 'block';
                     this.alertsTriggered[40] = true;
-                    this.playSound();
+                    // No additional beep at 40 minutes
                 }
                 
                 if (minutes >= 45 && !this.alertsTriggered[45]) {
                     this.body.className = 'danger';
                     this.alertsTriggered[45] = true;
-                    this.playSound();
+                    this.playBeeps(2); // 2 beeps for 45 minutes
                 }
                 
                 if (minutes >= 60 && !this.alertsTriggered[60]) {
                     this.body.className = 'critical';
                     this.alertsTriggered[60] = true;
-                    this.playUrgentSound();
+                    this.playBeeps(3); // 3 beeps for 60 minutes
                 }
             }
             
-            playSound() {
-                try {
-                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                    
-                    oscillator.start();
-                    oscillator.stop(audioContext.currentTime + 0.15);
-                } catch (error) {
-                    console.log('Audio not supported');
-                }
+            manualAlert() {
+                // Manual alert with 3 urgent beeps to get doctor's attention
+                this.playBeeps(3);
+                
+                // Flash the button to show it was pressed
+                const originalText = this.beepBtn.textContent;
+                this.beepBtn.textContent = '🔊 ALERTED!';
+                this.beepBtn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+                
+                setTimeout(() => {
+                    this.beepBtn.textContent = originalText;
+                    this.beepBtn.style.background = 'linear-gradient(135deg, #8b5cf6, #7c3aed)';
+                }, 1000);
             }
             
-            playUrgentSound() {
+            playBeeps(count) {
                 try {
                     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     
-                    for (let i = 0; i < 3; i++) {
+                    for (let i = 0; i < count; i++) {
                         setTimeout(() => {
                             const oscillator = audioContext.createOscillator();
                             const gainNode = audioContext.createGain();
@@ -512,12 +659,13 @@
                             oscillator.connect(gainNode);
                             gainNode.connect(audioContext.destination);
                             
-                            oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
-                            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                            // Gentle, pleasant beep tone
+                            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                            gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
                             
                             oscillator.start();
                             oscillator.stop(audioContext.currentTime + 0.2);
-                        }, i * 300);
+                        }, i * 400); // 400ms between beeps
                     }
                 } catch (error) {
                     console.log('Audio not supported');
@@ -529,10 +677,9 @@
             new CompactMedicalTimer();
         });
         
-        // Prevent context menu for cleaner experience
+        // Prevent context menu and zoom for cleaner experience
         document.addEventListener('contextmenu', e => e.preventDefault());
         
-        // Prevent zoom
         document.addEventListener('wheel', e => {
             if (e.ctrlKey) e.preventDefault();
         }, { passive: false });
