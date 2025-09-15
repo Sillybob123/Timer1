@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Visit Timer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .timer-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 280px;
+            min-width: 200px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 16px;
+            letter-spacing: -0.025em;
+        }
+
+        .timer-display {
+            font-size: clamp(2rem, 8vw, 2.5rem);
+            font-weight: 700;
+            color: #1f2937;
+            margin: 16px 0;
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+
+        .status-indicator {
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+
+        .status-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 2px;
+            width: 0%;
+            transition: all 0.3s ease;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0 12px 0;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 0;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .start-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .start-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .stop-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .stop-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: white;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+
+        .status-text {
+            font-size: 11px;
+            color: #6b7280;
+            margin: 8px 0;
+            min-height: 16px;
+        }
+
+        .warning-message {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 12px 8px;
+            margin: 12px 0;
+            display: none;
+            animation: pulse-warning 2s infinite;
+        }
+
+        .warning-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: #92400e;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .warning-hebrew {
+            font-size: 13px;
+            font-weight: 700;
+            color: #92400e;
+            direction: rtl;
+            margin-top: 4px;
+        }
+
+        .milestones {
+            display: none;
+        }
+
+        /* Background states */
+        .normal { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .warning { 
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        .danger { 
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .critical { 
+            background: linear-gradient(135deg, #000000 0%, #1f2937 100%);
+            animation: flash-critical 1.5s infinite;
+        }
+
+        @keyframes flash-critical {
+            0%, 70% { background: linear-gradient(135deg, #000000 0%, #1f2937 100%); }
+            71%, 100% { background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%); }
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .critical .timer-display {
+            color: #ef4444;
+            animation: pulse-critical 1s infinite;
+        }
+
+        .critical .timer-container {
+            border: 1px solid #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+
+        @keyframes pulse-critical {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Compact mode for very small widths */
+        @media (max-width: 240px) {
+            .timer-container {
+                padding: 12px 8px;
+                max-width: none;
+            }
+
+            .header {
+                font-size: 12px;
+                margin-bottom: 12px;
+            }
+
+            .timer-display {
+                font-size: 1.5rem;
+                margin: 12px 0;
+            }
+
+            button {
+                font-size: 10px;
+                padding: 8px 6px;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .warning-text {
+                font-size: 10px;
+            }
+
+            .warning-hebrew {
+                font-size: 11px;
+            }
+        }
+
+        /* Ultra-compact mode for extremely small widths */
+        @media (max-width: 180px) {
+            .timer-container {
+                padding: 8px 6px;
+            }
+
+            .header {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            .timer-display {
+                font-size: 1.25rem;
+                margin: 8px 0;
+            }
+
+            button {
+                font-size: 9px;
+                padding: 6px 4px;
+            }
+
+            .status-text {
+                font-size: 9px;
+            }
+
+            .warning-message {
+                padding: 8px 6px;
+                margin: 8px 0;
+            }
+        }
+
+        /* Vertical layout optimization */
+        @media (max-height: 400px) {
+            body {
+                padding: 4px;
+            }
+
+            .timer-container {
+                padding: 12px 16px;
+            }
+
+            .timer-display {
+                margin: 8px 0;
+            }
+
+            .controls {
+                margin: 8px 0;
+            }
+        }
+
+        /* Hide scrollbars but keep functionality */
+        body {
+            overflow: hidden;
+        }
+
+        .timer-container {
+            overflow: visible;
+        }
+    </style>
+</head>
+<body class="normal">
+    <div class="timer-container">
+        <div class="header">VISIT TIMER</div>
+        
+        <div class="timer-display" id="timerDisplay">00:00.00</div>
+        
+        <div class="status-indicator">
+            <div class="status-fill" id="statusFill"></div>
+        </div>
+        
+        <div class="controls">
+            <button class="start-btn" id="startBtn">START</button>
+            <button class="stop-btn" id="stopBtn">PAUSE</button>
+            <button class="reset-btn" id="resetBtn">RESET</button>
+        </div>
+        
+        <div class="status-text" id="status">Ready</div>
+        
+        <div class="warning-message" id="warningMessage">
+            <div class="warning-text">TIME TO GO</div>
+            <div class="warning-hebrew">הזמן ללכת</div>
+        </div>
+        
+        <div class="milestones">
+            <div id="milestone30">30min</div>
+            <div id="milestone40">40min</div>
+            <div id="milestone45">45min</div>
+            <div id="milestone60">60min</div>
+        </div>
+    </div>
+
+    <script>
+        class CompactMedicalTimer {
+            constructor() {
+                this.startTime = 0;
+                this.elapsedTime = 0;
+                this.timerInterval = null;
+                this.isRunning = false;
+                
+                this.timerDisplay = document.getElementById('timerDisplay');
+                this.startBtn = document.getElementById('startBtn');
+                this.stopBtn = document.getElementById('stopBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.status = document.getElementById('status');
+                this.statusFill = document.getElementById('statusFill');
+                this.warningMessage = document.getElementById('warningMessage');
+                this.body = document.body;
+                
+                this.alertsTriggered = {
+                    30: false,
+                    40: false,
+                    45: false,
+                    60: false
+                };
+                
+                this.initEventListeners();
+                this.updateDisplay();
+            }
+            
+            initEventListeners() {
+                this.startBtn.addEventListener('click', () => this.start());
+                this.stopBtn.addEventListener('click', () => this.stop());
+                this.resetBtn.addEventListener('click', () => this.reset());
+            }
+            
+            start() {
+                if (!this.isRunning) {
+                    this.startTime = Date.now() - this.elapsedTime;
+                    this.timerInterval = setInterval(() => this.updateTimer(), 10);
+                    this.isRunning = true;
+                    this.startBtn.textContent = 'ACTIVE';
+                    this.startBtn.disabled = true;
+                    this.status.textContent = 'Running';
+                }
+            }
+            
+            stop() {
+                if (this.isRunning) {
+                    clearInterval(this.timerInterval);
+                    this.isRunning = false;
+                    this.startBtn.textContent = 'RESUME';
+                    this.startBtn.disabled = false;
+                    this.status.textContent = 'Paused';
+                }
+            }
+            
+            reset() {
+                clearInterval(this.timerInterval);
+                this.isRunning = false;
+                this.elapsedTime = 0;
+                this.startTime = 0;
+                this.startBtn.textContent = 'START';
+                this.startBtn.disabled = false;
+                this.status.textContent = 'Ready';
+                this.warningMessage.style.display = 'none';
+                this.statusFill.style.width = '0%';
+                this.body.className = 'normal';
+                
+                Object.keys(this.alertsTriggered).forEach(key => {
+                    this.alertsTriggered[key] = false;
+                });
+                
+                this.updateDisplay();
+            }
+            
+            updateTimer() {
+                this.elapsedTime = Date.now() - this.startTime;
+                this.updateDisplay();
+                this.updateProgressBar();
+                this.checkAlerts();
+            }
+            
+            updateDisplay() {
+                const totalMilliseconds = this.elapsedTime;
+                const totalSeconds = Math.floor(totalMilliseconds / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const milliseconds = Math.floor((totalMilliseconds % 1000) / 10); // Show centiseconds (10ms precision)
+                
+                // Show hours only if over 60 minutes
+                if (minutes >= 60) {
+                    const hours = Math.floor(minutes / 60);
+                    const displayMinutes = minutes % 60;
+                    this.timerDisplay.textContent = `${hours}:${displayMinutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+                } else {
+                    this.timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+                }
+            }
+            
+            updateProgressBar() {
+                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
+                let percentage = 0;
+                let color = '#10b981';
+                
+                if (minutes < 30) {
+                    percentage = (minutes / 30) * 100;
+                    color = '#10b981';
+                } else if (minutes < 45) {
+                    percentage = 100;
+                    color = '#f59e0b';
+                } else if (minutes < 60) {
+                    percentage = 100;
+                    color = '#ef4444';
+                } else {
+                    percentage = 100;
+                    color = '#dc2626';
+                }
+                
+                this.statusFill.style.width = `${Math.min(percentage, 100)}%`;
+                this.statusFill.style.background = `linear-gradient(90deg, ${color}, ${color})`;
+            }
+            
+            checkAlerts() {
+                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
+                
+                if (minutes >= 30 && !this.alertsTriggered[30]) {
+                    this.body.className = 'warning';
+                    this.alertsTriggered[30] = true;
+                    this.playSound();
+                }
+                
+                if (minutes >= 40 && !this.alertsTriggered[40]) {
+                    this.warningMessage.style.display = 'block';
+                    this.alertsTriggered[40] = true;
+                    this.playSound();
+                }
+                
+                if (minutes >= 45 && !this.alertsTriggered[45]) {
+                    this.body.className = 'danger';
+                    this.alertsTriggered[45] = true;
+                    this.playSound();
+                }
+                
+                if (minutes >= 60 && !this.alertsTriggered[60]) {
+                    this.body.className = 'critical';
+                    this.alertsTriggered[60] = true;
+                    this.playUrgentSound();
+                }
+            }
+            
+            playSound() {
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.15);
+                } catch (error) {
+                    console.log('Audio not supported');
+                }
+            }
+            
+            playUrgentSound() {
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    
+                    for (let i = 0; i < 3; i++) {
+                        setTimeout(() => {
+                            const oscillator = audioContext.createOscillator();
+                            const gainNode = audioContext.createGain();
+                            
+                            oscillator.connect(gainNode);
+                            gainNode.connect(audioContext.destination);
+                            
+                            oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
+                            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                            
+                            oscillator.start();
+                            oscillator.stop(audioContext.currentTime + 0.2);
+                        }, i * 300);
+                    }
+                } catch (error) {
+                    console.log('Audio not supported');
+                }
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new CompactMedicalTimer();
+        });
+        
+        // Prevent context menu for cleaner experience
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        
+        // Prevent zoom
+        document.addEventListener('wheel', e => {
+            if (e.ctrlKey) e.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
