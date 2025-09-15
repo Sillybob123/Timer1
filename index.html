@@ -491,27 +491,27 @@
                 const minutes = Math.floor(this.elapsedTime / (1000 * 60));
                 
                 // Apply visual states without sound
-                if (minutes >= 60) {
+                if (minutes >= 45) {
                     this.body.className = 'critical';
                     this.warningMessage.style.display = 'block';
+                    this.alertsTriggered[20] = true;
+                    this.alertsTriggered[28] = true;
                     this.alertsTriggered[30] = true;
-                    this.alertsTriggered[40] = true;
                     this.alertsTriggered[45] = true;
-                    this.alertsTriggered[60] = true;
-                } else if (minutes >= 45) {
+                } else if (minutes >= 30) {
                     this.body.className = 'danger';
                     this.warningMessage.style.display = 'block';
+                    this.alertsTriggered[20] = true;
+                    this.alertsTriggered[28] = true;
                     this.alertsTriggered[30] = true;
-                    this.alertsTriggered[40] = true;
-                    this.alertsTriggered[45] = true;
-                } else if (minutes >= 40) {
+                } else if (minutes >= 28) {
                     this.body.className = 'warning';
                     this.warningMessage.style.display = 'block';
-                    this.alertsTriggered[30] = true;
-                    this.alertsTriggered[40] = true;
-                } else if (minutes >= 30) {
+                    this.alertsTriggered[20] = true;
+                    this.alertsTriggered[28] = true;
+                } else if (minutes >= 20) {
                     this.body.className = 'warning';
-                    this.alertsTriggered[30] = true;
+                    this.alertsTriggered[20] = true;
                 } else {
                     this.body.className = 'normal';
                     this.warningMessage.style.display = 'none';
