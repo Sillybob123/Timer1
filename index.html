@@ -214,7 +214,7 @@
         }
 
         .warning-hebrew {
-            font-size: clamp(26px, 5vw, 32px);
+            font-size: clamp(16px, 5vw, 22px);
             font-weight: 800;
             color: #92400e;
             direction: rtl;
@@ -380,7 +380,7 @@
         
         <div class="warning-message" id="warningMessage">
             <div class="warning-text">TIME TO GO</div>
-            <div class="warning-hebrew">זמן ללכת</div>
+            <div class="warning-hebrew">הזמן ללכת</div>
         </div>
     </div>
 
@@ -405,10 +405,10 @@
                 this.body = document.body;
                 
                 this.alertsTriggered = {
+                    20: false,
+                    28: false,
                     30: false,
-                    40: false,
-                    45: false,
-                    60: false
+                    45: false
                 };
                 
                 this.initEventListeners();
@@ -586,13 +586,13 @@
                 let percentage = 0;
                 let color = '#10b981';
                 
-                if (minutes < 30) {
-                    percentage = (minutes / 30) * 100;
+                if (minutes < 20) {
+                    percentage = (minutes / 20) * 100;
                     color = '#10b981';
-                } else if (minutes < 45) {
+                } else if (minutes < 30) {
                     percentage = 100;
                     color = '#f59e0b';
-                } else if (minutes < 60) {
+                } else if (minutes < 45) {
                     percentage = 100;
                     color = '#ef4444';
                 } else {
@@ -607,28 +607,28 @@
             checkAlerts() {
                 const minutes = Math.floor(this.elapsedTime / (1000 * 60));
                 
-                if (minutes >= 30 && !this.alertsTriggered[30]) {
+                if (minutes >= 20 && !this.alertsTriggered[20]) {
                     this.body.className = 'warning';
-                    this.alertsTriggered[30] = true;
-                    this.playBeeps(1); // 1 beep for 30 minutes
+                    this.alertsTriggered[20] = true;
+                    this.playBeeps(1); // 1 beep for 20 minutes
                 }
                 
-                if (minutes >= 40 && !this.alertsTriggered[40]) {
+                if (minutes >= 28 && !this.alertsTriggered[28]) {
                     this.warningMessage.style.display = 'block';
-                    this.alertsTriggered[40] = true;
-                    // No additional beep at 40 minutes
+                    this.alertsTriggered[28] = true;
+                    // No beep at 28 minutes (just message appears)
+                }
+                
+                if (minutes >= 30 && !this.alertsTriggered[30]) {
+                    this.body.className = 'danger';
+                    this.alertsTriggered[30] = true;
+                    this.playBeeps(2); // 2 beeps for 30 minutes
                 }
                 
                 if (minutes >= 45 && !this.alertsTriggered[45]) {
-                    this.body.className = 'danger';
-                    this.alertsTriggered[45] = true;
-                    this.playBeeps(2); // 2 beeps for 45 minutes
-                }
-                
-                if (minutes >= 60 && !this.alertsTriggered[60]) {
                     this.body.className = 'critical';
-                    this.alertsTriggered[60] = true;
-                    this.playBeeps(3); // 3 beeps for 60 minutes
+                    this.alertsTriggered[45] = true;
+                    this.playBeeps(3); // 3 beeps for 45 minutes
                 }
             }
             
