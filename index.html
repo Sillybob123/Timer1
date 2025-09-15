@@ -12,71 +12,78 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4px;
-            transition: all 0.3s ease;
-            overflow: hidden;
+            padding: 8px;
+            transition: all 0.4s ease;
         }
 
         .timer-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
             width: 100%;
-            max-width: 320px;
-            min-width: 150px;
-            padding: 16px 12px;
+            max-width: 380px;
+            min-width: 280px;
+            padding: 24px 20px;
             text-align: center;
-            position: relative;
         }
 
         .header {
-            font-size: clamp(10px, 3vw, 14px);
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 12px;
-            letter-spacing: -0.025em;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* TIMER SECTION */
+        .timer-section {
+            margin-bottom: 24px;
+            padding: 20px 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
         }
 
         .timer-display {
-            font-size: clamp(1.2rem, 6vw, 2.2rem);
-            font-weight: 700;
-            color: #1f2937;
-            margin: 12px 0;
+            font-size: clamp(2.2rem, 8vw, 3rem);
+            font-weight: 800;
+            color: #1e293b;
+            margin: 16px 0;
             font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
             letter-spacing: -0.02em;
-            line-height: 1;
             cursor: pointer;
-            user-select: all;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: background-color 0.2s ease;
+            padding: 8px 12px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
         .timer-display:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+            background: rgba(59, 130, 246, 0.05);
+            transform: translateY(-1px);
         }
 
         .time-input {
             display: none;
-            font-size: clamp(1.2rem, 6vw, 2.2rem);
-            font-weight: 700;
-            color: #1f2937;
-            margin: 12px 0;
+            font-size: clamp(2.2rem, 8vw, 3rem);
+            font-weight: 800;
+            color: #1e293b;
+            margin: 16px 0;
             font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
-            letter-spacing: -0.02em;
-            line-height: 1;
-            background: transparent;
+            background: rgba(59, 130, 246, 0.05);
             border: 2px solid #3b82f6;
-            border-radius: 6px;
-            padding: 4px 8px;
+            border-radius: 12px;
+            padding: 8px 12px;
             text-align: center;
             width: 100%;
         }
@@ -84,145 +91,332 @@
         .time-input:focus {
             outline: none;
             border-color: #1d4ed8;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
 
         .edit-hint {
-            font-size: clamp(8px, 2vw, 10px);
-            color: #6b7280;
-            margin-top: 4px;
-            opacity: 0.7;
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 8px;
+            opacity: 0.8;
+            font-weight: 500;
         }
 
         .status-indicator {
-            height: 3px;
-            background: #e5e7eb;
-            border-radius: 2px;
-            margin: 10px 0;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            margin: 16px 0;
             overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .status-fill {
             height: 100%;
             background: linear-gradient(90deg, #10b981, #059669);
-            border-radius: 2px;
+            border-radius: 3px;
             width: 0%;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
         }
 
-        .controls {
-            display: flex;
-            gap: 6px;
-            margin: 12px 0 8px 0;
-            flex-wrap: wrap;
+        /* CONTROLS SECTION */
+        .controls-section {
+            margin-bottom: 20px;
         }
 
-        .control-row {
-            display: flex;
-            gap: 6px;
-            width: 100%;
-            margin-bottom: 6px;
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
         }
 
-        .control-row:last-child {
-            margin-bottom: 0;
+        .main-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        button {
-            flex: 1;
-            min-width: 0;
-            padding: clamp(6px, 2vw, 10px) clamp(4px, 2vw, 8px);
+        .btn {
+            padding: 12px 8px;
             border: none;
-            border-radius: 6px;
-            font-size: clamp(9px, 2.5vw, 12px);
-            font-weight: 600;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             text-transform: uppercase;
-            letter-spacing: 0.025em;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .start-btn {
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-start {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
         }
 
-        .start-btn:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
-        }
-
-        .start-btn:disabled {
-            background: #9ca3af;
+        .btn-start:disabled {
+            background: linear-gradient(135deg, #9ca3af, #6b7280);
             cursor: not-allowed;
+            transform: none;
         }
 
-        .stop-btn {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+        .btn-pause {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             color: white;
         }
 
-        .stop-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-        }
-
-        .reset-btn {
-            background: linear-gradient(135deg, #6b7280, #4b5563);
+        .btn-reset {
+            background: linear-gradient(135deg, #64748b, #475569);
             color: white;
         }
 
-        .reset-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+        /* ALERT CONTROLS */
+        .alert-section {
+            background: linear-gradient(135deg, #fefbf2 0%, #fef3c7 100%);
+            border: 1px solid #fde68a;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
         }
 
-        .beep-btn {
+        .beep-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .btn-beep {
             background: linear-gradient(135deg, #8b5cf6, #7c3aed);
             color: white;
-            width: 100%;
+            padding: 10px 6px;
+            font-size: 11px;
         }
 
-        .beep-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        .delay-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .delay-input {
+            width: 60px;
+            padding: 10px 8px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 600;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .delay-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .delay-select {
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 80px;
+        }
+
+        .delay-select:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .btn-delay {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            flex: 1;
+            font-size: 11px;
+            padding: 10px 12px;
+            min-width: 100px;
+        }
+
+        /* STATUS AND MESSAGES */
+        .status-section {
+            margin-bottom: 16px;
         }
 
         .status-text {
-            font-size: clamp(8px, 2.5vw, 11px);
-            color: #6b7280;
-            margin: 6px 0;
-            min-height: 14px;
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
 
-        .warning-message {
+        .pending-alert {
             background: linear-gradient(135deg, #fef3c7, #fde68a);
             border: 1px solid #f59e0b;
-            border-radius: 6px;
-            padding: 12px 8px;
-            margin: 8px 0;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 12px 0;
             display: none;
-            animation: pulse-warning 2s infinite;
+            animation: gentle-pulse 2s infinite;
+        }
+
+        .pending-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .btn-cancel {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .btn-cancel:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        /* NOTE SECTION */
+        .note-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #bae6fd;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .note-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            background: white;
+            transition: all 0.2s ease;
+            resize: none;
+        }
+
+        .note-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .note-input::placeholder {
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .note-display {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border: 2px solid #3b82f6;
+            border-radius: 16px;
+            padding: 20px 16px;
+            margin: 16px 0;
+            display: none;
+            animation: gentle-pulse 3s infinite;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+
+        .note-text {
+            font-size: clamp(20px, 6vw, 32px);
+            font-weight: 900;
+            color: #1e40af;
+            text-align: center;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            word-break: break-word;
+        }
+
+        .note-close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .note-close:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        /* WARNING MESSAGE */
+        .warning-message {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 16px 12px;
+            margin: 16px 0;
+            display: none;
+            animation: urgent-pulse 2s infinite;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
         }
 
         .warning-text {
-            font-size: clamp(10px, 2.5vw, 12px);
-            font-weight: 700;
+            font-size: clamp(14px, 4vw, 18px);
+            font-weight: 800;
             color: #92400e;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
         .warning-hebrew {
-            font-size: clamp(16px, 5vw, 22px);
-            font-weight: 800;
+            font-size: clamp(22px, 6vw, 32px);
+            font-weight: 900;
             color: #92400e;
             direction: rtl;
-            margin-top: 6px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            line-height: 1.1;
         }
 
-        /* Background states */
+        /* BACKGROUND STATES */
         .normal { 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -237,107 +431,105 @@
 
         .critical { 
             background: linear-gradient(135deg, #000000 0%, #1f2937 100%);
-            animation: flash-critical 1.5s infinite;
+            animation: flash-critical 2s infinite;
         }
 
+        /* ANIMATIONS */
         @keyframes flash-critical {
-            0%, 70% { background: linear-gradient(135deg, #000000 0%, #1f2937 100%); }
-            71%, 100% { background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%); }
+            0%, 60% { background: linear-gradient(135deg, #000000 0%, #1f2937 100%); }
+            61%, 100% { background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%); }
         }
 
-        @keyframes pulse-warning {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.01); }
+        @keyframes gentle-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.95; }
         }
 
-        .critical .timer-display {
-            color: #ef4444;
-            animation: pulse-critical 1s infinite;
-        }
-
-        .critical .timer-container {
-            border: 1px solid #ef4444;
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
-        }
-
-        @keyframes pulse-critical {
+        @keyframes urgent-pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.03); }
         }
 
-        /* Ultra-responsive design */
-        @media (max-width: 200px) {
+        .critical .timer-display {
+            color: #ef4444;
+            animation: urgent-pulse 1.5s infinite;
+        }
+
+        .critical .timer-container {
+            border: 2px solid #ef4444;
+            box-shadow: 
+                0 20px 40px rgba(239, 68, 68, 0.4),
+                0 0 0 1px rgba(239, 68, 68, 0.3);
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 320px) {
             .timer-container {
-                padding: 8px 6px;
-                border-radius: 8px;
+                padding: 16px 12px;
+                max-width: none;
             }
 
-            .controls {
+            .main-controls {
+                gap: 6px;
+            }
+
+            .beep-controls {
+                gap: 6px;
+            }
+
+            .btn {
+                padding: 10px 6px;
+                font-size: 10px;
+            }
+
+            .delay-input {
+                width: 45px;
+                font-size: 12px;
+            }
+            
+            .delay-select {
+                font-size: 10px;
+                min-width: 65px;
+            }
+        }
+
+        @media (max-width: 280px) {
+            .main-controls {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .beep-controls {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .delay-controls {
                 flex-direction: column;
-                gap: 4px;
+                gap: 8px;
             }
-
-            button {
-                font-size: 8px;
-                padding: 6px 4px;
+            
+            .delay-input, .delay-select {
+                width: 100%;
             }
         }
 
-        @media (max-height: 300px) {
-            body {
-                padding: 2px;
-            }
-
+        @media (max-height: 600px) {
             .timer-container {
-                padding: 8px 10px;
+                padding: 16px;
             }
 
-            .timer-display {
-                margin: 6px 0;
+            .timer-section {
+                padding: 12px;
+                margin-bottom: 16px;
             }
 
-            .controls {
-                margin: 6px 0;
-            }
-
-            .warning-message {
-                padding: 4px 6px;
-                margin: 4px 0;
+            .alert-section, .note-section {
+                padding: 12px;
             }
         }
 
-        /* Extreme compactness for very small screens */
-        @media (max-width: 150px) {
-            .header {
-                font-size: 8px;
-                margin-bottom: 6px;
-            }
-
-            .timer-display {
-                font-size: 1rem;
-                margin: 6px 0;
-            }
-
-            .status-indicator {
-                height: 2px;
-                margin: 6px 0;
-            }
-
-            button {
-                font-size: 7px;
-                padding: 4px 2px;
-            }
-
-            .warning-text {
-                font-size: 8px;
-            }
-
-            .warning-hebrew {
-                font-size: 14px;
-            }
-        }
-
-        /* Prevent text selection except for timer display */
+        /* PREVENT TEXT SELECTION */
         body {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -345,7 +537,7 @@
             user-select: none;
         }
 
-        .timer-display {
+        .timer-display, .time-input, .note-input {
             -webkit-user-select: all;
             -moz-user-select: all;
             -ms-user-select: all;
@@ -355,54 +547,91 @@
 </head>
 <body class="normal">
     <div class="timer-container">
-        <div class="header">VISIT TIMER</div>
+        <div class="header">Medical Visit Timer</div>
         
-        <div class="timer-display" id="timerDisplay" title="Click to edit time">00:00.00</div>
-        <input type="text" class="time-input" id="timeInput" placeholder="MM:SS">
-        <div class="edit-hint">Click timer to edit</div>
-        
-        <div class="status-indicator">
-            <div class="status-fill" id="statusFill"></div>
-        </div>
-        
-        <div class="controls">
-            <div class="control-row">
-                <button class="start-btn" id="startBtn">START</button>
-                <button class="stop-btn" id="stopBtn">PAUSE</button>
-                <button class="reset-btn" id="resetBtn">RESET</button>
-            </div>
-            <div class="control-row">
-                <button class="beep-btn" id="beepBtn">🔊 ALERT DOCTOR</button>
+        <!-- TIMER SECTION -->
+        <div class="timer-section">
+            <div class="timer-display" id="timerDisplay" title="Click to edit time">00:00.00</div>
+            <input type="text" class="time-input" id="timeInput" placeholder="MM:SS">
+            <div class="edit-hint">Click timer to edit</div>
+            
+            <div class="status-indicator">
+                <div class="status-fill" id="statusFill"></div>
             </div>
         </div>
-        
-        <div class="status-text" id="status">Ready</div>
-        
+
+        <!-- MAIN CONTROLS -->
+        <div class="controls-section">
+            <div class="section-title">Timer Controls</div>
+            <div class="main-controls">
+                <button class="btn btn-start" id="startBtn">Start</button>
+                <button class="btn btn-pause" id="stopBtn">Pause</button>
+                <button class="btn btn-reset" id="resetBtn">Reset</button>
+            </div>
+        </div>
+
+        <!-- ALERT CONTROLS -->
+        <div class="alert-section">
+            <div class="section-title">Alert Controls</div>
+            <div class="beep-controls">
+                <button class="btn btn-beep" id="beep1Btn">1 Beep</button>
+                <button class="btn btn-beep" id="beep2Btn">2 Beeps</button>
+                <button class="btn btn-beep" id="beep3Btn">3 Beeps</button>
+            </div>
+            <div class="delay-controls">
+                <input type="number" class="delay-input" id="delayInput" placeholder="15" min="1" max="300" value="15">
+                <select class="delay-select" id="beepSelect">
+                    <option value="1">1 Beep</option>
+                    <option value="2">2 Beeps</option>
+                    <option value="3">3 Beeps</option>
+                </select>
+                <button class="btn btn-delay" id="delayBeepBtn">Schedule Alert</button>
+            </div>
+        </div>
+
+        <!-- NOTE SECTION -->
+        <div class="note-section">
+            <div class="section-title">Doctor Note</div>
+            <textarea class="note-input" id="noteInput" placeholder="Type message for doctor (e.g., 'Patient leaving', 'Next ready')" maxlength="50" rows="2"></textarea>
+        </div>
+
+        <!-- STATUS SECTION -->
+        <div class="status-section">
+            <div class="status-text" id="status">Ready to start</div>
+            
+            <div class="pending-alert" id="pendingAlert">
+                <div class="pending-text" id="pendingText">Beep scheduled in 15 seconds...</div>
+                <button class="btn-cancel" id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+
+        <!-- LARGE NOTE DISPLAY -->
+        <div class="note-display" id="noteDisplay">
+            <button class="note-close" id="noteClose">×</button>
+            <div class="note-text" id="noteText"></div>
+        </div>
+
+        <!-- TIME TO GO WARNING -->
         <div class="warning-message" id="warningMessage">
-            <div class="warning-text">TIME TO GO</div>
+            <div class="warning-text">Time to Go</div>
             <div class="warning-hebrew">הזמן ללכת</div>
         </div>
     </div>
 
     <script>
-        class CompactMedicalTimer {
+        class ProfessionalMedicalTimer {
             constructor() {
                 this.startTime = 0;
                 this.elapsedTime = 0;
                 this.timerInterval = null;
                 this.isRunning = false;
                 this.isEditing = false;
+                this.delayTimeout = null;
                 
-                this.timerDisplay = document.getElementById('timerDisplay');
-                this.timeInput = document.getElementById('timeInput');
-                this.startBtn = document.getElementById('startBtn');
-                this.stopBtn = document.getElementById('stopBtn');
-                this.resetBtn = document.getElementById('resetBtn');
-                this.beepBtn = document.getElementById('beepBtn');
-                this.status = document.getElementById('status');
-                this.statusFill = document.getElementById('statusFill');
-                this.warningMessage = document.getElementById('warningMessage');
-                this.body = document.body;
+                this.initElements();
+                this.initEventListeners();
+                this.updateDisplay();
+                this.updateDelayButtonText();
                 
                 this.alertsTriggered = {
                     20: false,
@@ -410,45 +639,205 @@
                     30: false,
                     45: false
                 };
-                
-                this.initEventListeners();
-                this.updateDisplay();
+            }
+            
+            initElements() {
+                this.timerDisplay = document.getElementById('timerDisplay');
+                this.timeInput = document.getElementById('timeInput');
+                this.startBtn = document.getElementById('startBtn');
+                this.stopBtn = document.getElementById('stopBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.beep1Btn = document.getElementById('beep1Btn');
+                this.beep2Btn = document.getElementById('beep2Btn');
+                this.beep3Btn = document.getElementById('beep3Btn');
+                this.delayInput = document.getElementById('delayInput');
+                this.beepSelect = document.getElementById('beepSelect');
+                this.delayBeepBtn = document.getElementById('delayBeepBtn');
+                this.noteInput = document.getElementById('noteInput');
+                this.noteDisplay = document.getElementById('noteDisplay');
+                this.noteText = document.getElementById('noteText');
+                this.noteClose = document.getElementById('noteClose');
+                this.status = document.getElementById('status');
+                this.statusFill = document.getElementById('statusFill');
+                this.warningMessage = document.getElementById('warningMessage');
+                this.pendingAlert = document.getElementById('pendingAlert');
+                this.pendingText = document.getElementById('pendingText');
+                this.cancelBtn = document.getElementById('cancelBtn');
+                this.body = document.body;
             }
             
             initEventListeners() {
+                // Main controls
                 this.startBtn.addEventListener('click', () => this.start());
                 this.stopBtn.addEventListener('click', () => this.stop());
                 this.resetBtn.addEventListener('click', () => this.reset());
-                this.beepBtn.addEventListener('click', () => this.manualAlert());
                 
-                // Timer editing functionality
+                // Beep controls
+                this.beep1Btn.addEventListener('click', () => this.manualBeep(1));
+                this.beep2Btn.addEventListener('click', () => this.manualBeep(2));
+                this.beep3Btn.addEventListener('click', () => this.manualBeep(3));
+                
+                // Delay controls
+                this.delayBeepBtn.addEventListener('click', () => this.scheduleDelayedBeep());
+                this.cancelBtn.addEventListener('click', () => this.cancelDelayedBeep());
+                this.delayInput.addEventListener('input', () => this.updateDelayButtonText());
+                this.beepSelect.addEventListener('change', () => this.updateDelayButtonText());
+                
+                // Timer editing
                 this.timerDisplay.addEventListener('click', () => this.startEditing());
                 this.timeInput.addEventListener('blur', () => this.finishEditing());
                 this.timeInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        this.finishEditing();
-                    } else if (e.key === 'Escape') {
-                        this.cancelEditing();
+                    if (e.key === 'Enter') this.finishEditing();
+                    else if (e.key === 'Escape') this.cancelEditing();
+                });
+                
+                // Note functionality
+                this.noteInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.showNote();
                     }
                 });
+                this.noteClose.addEventListener('click', () => this.hideNote());
                 
                 // Prevent accidental navigation
                 window.addEventListener('beforeunload', (e) => {
                     if (this.isRunning) {
                         e.preventDefault();
-                        e.returnValue = 'Timer is running. Are you sure you want to leave?';
+                        e.returnValue = 'Timer is running. Are you sure?';
                     }
                 });
             }
             
+            start() {
+                if (!this.isRunning) {
+                    this.startTime = Date.now() - this.elapsedTime;
+                    this.timerInterval = setInterval(() => this.updateTimer(), 10);
+                    this.isRunning = true;
+                    this.startBtn.textContent = 'Active';
+                    this.startBtn.disabled = true;
+                    this.status.textContent = 'Timer running';
+                }
+            }
+            
+            stop() {
+                if (this.isRunning) {
+                    clearInterval(this.timerInterval);
+                    this.isRunning = false;
+                    this.startBtn.textContent = 'Resume';
+                    this.startBtn.disabled = false;
+                    this.status.textContent = 'Timer paused';
+                }
+            }
+            
+            reset() {
+                clearInterval(this.timerInterval);
+                this.isRunning = false;
+                this.elapsedTime = 0;
+                this.startTime = 0;
+                this.startBtn.textContent = 'Start';
+                this.startBtn.disabled = false;
+                this.status.textContent = 'Ready to start';
+                this.warningMessage.style.display = 'none';
+                this.statusFill.style.width = '0%';
+                this.body.className = 'normal';
+                
+                // Cancel delayed beep
+                if (this.delayTimeout) {
+                    clearTimeout(this.delayTimeout);
+                    this.delayTimeout = null;
+                }
+                this.pendingAlert.style.display = 'none';
+                
+                // Reset alerts
+                Object.keys(this.alertsTriggered).forEach(key => {
+                    this.alertsTriggered[key] = false;
+                });
+                
+                this.updateDisplay();
+            }
+            
+            updateTimer() {
+                this.elapsedTime = Date.now() - this.startTime;
+                this.updateDisplay();
+                this.updateProgressBar();
+                this.checkAlerts();
+            }
+            
+            updateDisplay() {
+                const totalMilliseconds = this.elapsedTime;
+                const totalSeconds = Math.floor(totalMilliseconds / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const centiseconds = Math.floor((totalMilliseconds % 1000) / 10);
+                
+                if (minutes >= 60) {
+                    const hours = Math.floor(minutes / 60);
+                    const displayMinutes = minutes % 60;
+                    this.timerDisplay.textContent = `${hours}:${displayMinutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
+                } else {
+                    this.timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
+                }
+            }
+            
+            updateProgressBar() {
+                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
+                let percentage = 0;
+                let color = '#10b981';
+                
+                if (minutes < 20) {
+                    percentage = (minutes / 20) * 100;
+                    color = '#10b981';
+                } else if (minutes < 30) {
+                    percentage = 100;
+                    color = '#f59e0b';
+                } else if (minutes < 45) {
+                    percentage = 100;
+                    color = '#ef4444';
+                } else {
+                    percentage = 100;
+                    color = '#dc2626';
+                }
+                
+                this.statusFill.style.width = `${Math.min(percentage, 100)}%`;
+                this.statusFill.style.background = `linear-gradient(90deg, ${color}, ${color})`;
+            }
+            
+            checkAlerts() {
+                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
+                
+                if (minutes >= 20 && !this.alertsTriggered[20]) {
+                    this.body.className = 'warning';
+                    this.alertsTriggered[20] = true;
+                    this.playBeeps(1);
+                }
+                
+                if (minutes >= 28 && !this.alertsTriggered[28]) {
+                    this.warningMessage.style.display = 'block';
+                    this.alertsTriggered[28] = true;
+                }
+                
+                if (minutes >= 30 && !this.alertsTriggered[30]) {
+                    this.body.className = 'danger';
+                    this.alertsTriggered[30] = true;
+                    this.playBeeps(2);
+                }
+                
+                if (minutes >= 45 && !this.alertsTriggered[45]) {
+                    this.body.className = 'critical';
+                    this.alertsTriggered[45] = true;
+                    this.playBeeps(3);
+                }
+            }
+            
+            // Timer editing methods
             startEditing() {
-                if (this.isRunning) return; // Don't allow editing while running
+                if (this.isRunning) return;
                 
                 this.isEditing = true;
                 this.timerDisplay.style.display = 'none';
                 this.timeInput.style.display = 'block';
                 
-                // Convert current time to MM:SS format for editing
                 const totalSeconds = Math.floor(this.elapsedTime / 1000);
                 const minutes = Math.floor(totalSeconds / 60);
                 const seconds = totalSeconds % 60;
@@ -483,14 +872,12 @@
             }
             
             checkAlertsOnTimeChange() {
-                // Reset alerts and re-check based on new time
                 Object.keys(this.alertsTriggered).forEach(key => {
                     this.alertsTriggered[key] = false;
                 });
                 
                 const minutes = Math.floor(this.elapsedTime / (1000 * 60));
                 
-                // Apply visual states without sound
                 if (minutes >= 45) {
                     this.body.className = 'critical';
                     this.warningMessage.style.display = 'block';
@@ -518,135 +905,86 @@
                 }
             }
             
-            start() {
-                if (!this.isRunning) {
-                    this.startTime = Date.now() - this.elapsedTime;
-                    this.timerInterval = setInterval(() => this.updateTimer(), 10);
-                    this.isRunning = true;
-                    this.startBtn.textContent = 'ACTIVE';
-                    this.startBtn.disabled = true;
-                    this.status.textContent = 'Running';
-                }
+            // Beep control methods
+            manualBeep(count) {
+                this.playBeeps(count);
+                this.showButtonFeedback(count);
             }
             
-            stop() {
-                if (this.isRunning) {
-                    clearInterval(this.timerInterval);
-                    this.isRunning = false;
-                    this.startBtn.textContent = 'RESUME';
-                    this.startBtn.disabled = false;
-                    this.status.textContent = 'Paused';
-                }
-            }
-            
-            reset() {
-                clearInterval(this.timerInterval);
-                this.isRunning = false;
-                this.elapsedTime = 0;
-                this.startTime = 0;
-                this.startBtn.textContent = 'START';
-                this.startBtn.disabled = false;
-                this.status.textContent = 'Ready';
-                this.warningMessage.style.display = 'none';
-                this.statusFill.style.width = '0%';
-                this.body.className = 'normal';
+            showButtonFeedback(beepCount) {
+                const buttons = [this.beep1Btn, this.beep2Btn, this.beep3Btn];
+                const pressedBtn = buttons[beepCount - 1];
+                const originalText = pressedBtn.textContent;
                 
-                Object.keys(this.alertsTriggered).forEach(key => {
-                    this.alertsTriggered[key] = false;
-                });
-                
-                this.updateDisplay();
-            }
-            
-            updateTimer() {
-                this.elapsedTime = Date.now() - this.startTime;
-                this.updateDisplay();
-                this.updateProgressBar();
-                this.checkAlerts();
-            }
-            
-            updateDisplay() {
-                const totalMilliseconds = this.elapsedTime;
-                const totalSeconds = Math.floor(totalMilliseconds / 1000);
-                const minutes = Math.floor(totalSeconds / 60);
-                const seconds = totalSeconds % 60;
-                const milliseconds = Math.floor((totalMilliseconds % 1000) / 10);
-                
-                if (minutes >= 60) {
-                    const hours = Math.floor(minutes / 60);
-                    const displayMinutes = minutes % 60;
-                    this.timerDisplay.textContent = `${hours}:${displayMinutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
-                } else {
-                    this.timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
-                }
-            }
-            
-            updateProgressBar() {
-                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
-                let percentage = 0;
-                let color = '#10b981';
-                
-                if (minutes < 20) {
-                    percentage = (minutes / 20) * 100;
-                    color = '#10b981';
-                } else if (minutes < 30) {
-                    percentage = 100;
-                    color = '#f59e0b';
-                } else if (minutes < 45) {
-                    percentage = 100;
-                    color = '#ef4444';
-                } else {
-                    percentage = 100;
-                    color = '#dc2626';
-                }
-                
-                this.statusFill.style.width = `${Math.min(percentage, 100)}%`;
-                this.statusFill.style.background = `linear-gradient(90deg, ${color}, ${color})`;
-            }
-            
-            checkAlerts() {
-                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
-                
-                if (minutes >= 20 && !this.alertsTriggered[20]) {
-                    this.body.className = 'warning';
-                    this.alertsTriggered[20] = true;
-                    this.playBeeps(1); // 1 beep for 20 minutes
-                }
-                
-                if (minutes >= 28 && !this.alertsTriggered[28]) {
-                    this.warningMessage.style.display = 'block';
-                    this.alertsTriggered[28] = true;
-                    // No beep at 28 minutes (just message appears)
-                }
-                
-                if (minutes >= 30 && !this.alertsTriggered[30]) {
-                    this.body.className = 'danger';
-                    this.alertsTriggered[30] = true;
-                    this.playBeeps(2); // 2 beeps for 30 minutes
-                }
-                
-                if (minutes >= 45 && !this.alertsTriggered[45]) {
-                    this.body.className = 'critical';
-                    this.alertsTriggered[45] = true;
-                    this.playBeeps(3); // 3 beeps for 45 minutes
-                }
-            }
-            
-            manualAlert() {
-                // Manual alert with 3 urgent beeps to get doctor's attention
-                this.playBeeps(3);
-                
-                // Flash the button to show it was pressed
-                const originalText = this.beepBtn.textContent;
-                this.beepBtn.textContent = '🔊 ALERTED!';
-                this.beepBtn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+                pressedBtn.textContent = 'Sent!';
+                pressedBtn.style.background = 'linear-gradient(135deg, #059669, #047857)';
                 
                 setTimeout(() => {
-                    this.beepBtn.textContent = originalText;
-                    this.beepBtn.style.background = 'linear-gradient(135deg, #8b5cf6, #7c3aed)';
+                    pressedBtn.textContent = originalText;
+                    pressedBtn.style.background = 'linear-gradient(135deg, #8b5cf6, #7c3aed)';
                 }, 1000);
             }
             
+            // Delay control methods
+            updateDelayButtonText() {
+                const seconds = this.delayInput.value || '15';
+                const beepCount = this.beepSelect.value;
+                const beepText = beepCount === '1' ? 'beep' : 'beeps';
+                this.delayBeepBtn.textContent = `${beepCount} ${beepText} in ${seconds}s`;
+            }
+            
+            scheduleDelayedBeep() {
+                const seconds = parseInt(this.delayInput.value) || 15;
+                const beepCount = parseInt(this.beepSelect.value) || 1;
+                
+                if (this.delayTimeout) {
+                    clearTimeout(this.delayTimeout);
+                }
+                
+                const beepText = beepCount === 1 ? 'beep' : 'beeps';
+                this.pendingText.textContent = `${beepCount} ${beepText} scheduled in ${seconds} seconds...`;
+                this.pendingAlert.style.display = 'block';
+                
+                // Button feedback
+                const originalText = this.delayBeepBtn.textContent;
+                this.delayBeepBtn.textContent = 'Scheduled!';
+                this.delayBeepBtn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+                
+                setTimeout(() => {
+                    this.delayBeepBtn.textContent = originalText;
+                    this.delayBeepBtn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+                }, 1000);
+                
+                this.delayTimeout = setTimeout(() => {
+                    this.playBeeps(beepCount);
+                    this.pendingAlert.style.display = 'none';
+                    this.delayTimeout = null;
+                }, seconds * 1000);
+            }
+            
+            cancelDelayedBeep() {
+                if (this.delayTimeout) {
+                    clearTimeout(this.delayTimeout);
+                    this.delayTimeout = null;
+                }
+                this.pendingAlert.style.display = 'none';
+            }
+            
+            // Note methods
+            showNote() {
+                const noteText = this.noteInput.value.trim();
+                if (noteText) {
+                    this.noteText.textContent = noteText;
+                    this.noteDisplay.style.display = 'block';
+                    this.noteInput.value = '';
+                }
+            }
+            
+            hideNote() {
+                this.noteDisplay.style.display = 'none';
+            }
+            
+            // Audio methods
             playBeeps(count) {
                 try {
                     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -659,13 +997,12 @@
                             oscillator.connect(gainNode);
                             gainNode.connect(audioContext.destination);
                             
-                            // Gentle, pleasant beep tone
                             oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
                             gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
                             
                             oscillator.start();
                             oscillator.stop(audioContext.currentTime + 0.2);
-                        }, i * 400); // 400ms between beeps
+                        }, i * 400);
                     }
                 } catch (error) {
                     console.log('Audio not supported');
@@ -673,8 +1010,9 @@
             }
         }
         
+        // Initialize the timer when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            new CompactMedicalTimer();
+            new ProfessionalMedicalTimer();
         });
         
         // Prevent context menu and zoom for cleaner experience
