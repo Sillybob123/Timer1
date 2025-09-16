@@ -36,6 +36,57 @@
             text-align: center;
         }
 
+        /* TAB NAVIGATION */
+        .tab-navigation {
+            display: flex;
+            background: rgba(241, 245, 249, 0.8);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .header {
             font-size: 16px;
             font-weight: 700;
@@ -416,6 +467,39 @@
             line-height: 1.1;
         }
 
+        /* BREAK TIMER SPECIFIC STYLES */
+        .break-milestones {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            border: 1px solid #d1fae5;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .milestone-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #d1fae5;
+        }
+
+        .milestone-item:last-child {
+            border-bottom: none;
+        }
+
+        .milestone-time {
+            font-size: 14px;
+            font-weight: 700;
+            color: #166534;
+        }
+
+        .milestone-desc {
+            font-size: 12px;
+            color: #16a34a;
+            font-weight: 600;
+        }
+
         /* BACKGROUND STATES */
         .normal { 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -432,6 +516,27 @@
         .critical { 
             background: linear-gradient(135deg, #000000 0%, #1f2937 100%);
             animation: flash-critical 2s infinite;
+        }
+
+        /* BREAK TIMER STATES */
+        .break-warning { 
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        .break-danger { 
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .break-critical { 
+            background: linear-gradient(135deg, #000000 0%, #1f2937 100%);
+            animation: flash-critical 1.5s infinite;
+        }
+
+        .break-critical .timer-container {
+            border: 2px solid #ef4444;
+            box-shadow: 
+                0 20px 40px rgba(239, 68, 68, 0.4),
+                0 0 0 1px rgba(239, 68, 68, 0.3);
         }
 
         /* ANIMATIONS */
@@ -547,80 +652,136 @@
 </head>
 <body class="normal">
     <div class="timer-container">
-        <div class="header">Medical Visit Timer</div>
-        
-        <!-- TIMER SECTION -->
-        <div class="timer-section">
-            <div class="timer-display" id="timerDisplay" title="Click to edit time">00:00.00</div>
-            <input type="text" class="time-input" id="timeInput" placeholder="MM:SS">
-            <div class="edit-hint">Click timer to edit</div>
+        <!-- TAB NAVIGATION -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" id="visitTab">Patient Visit</button>
+            <button class="tab-btn" id="breakTab">Break Timer</button>
+        </div>
+
+        <!-- PATIENT VISIT TAB -->
+        <div class="tab-content active" id="visitContent">
+            <div class="header">Medical Visit Timer</div>
             
-            <div class="status-indicator">
-                <div class="status-fill" id="statusFill"></div>
+            <!-- TIMER SECTION -->
+            <div class="timer-section">
+                <div class="timer-display" id="timerDisplay" title="Click to edit time">00:00.00</div>
+                <input type="text" class="time-input" id="timeInput" placeholder="MM:SS">
+                <div class="edit-hint">Click timer to edit</div>
+                
+                <div class="status-indicator">
+                    <div class="status-fill" id="statusFill"></div>
+                </div>
+            </div>
+
+            <!-- MAIN CONTROLS -->
+            <div class="controls-section">
+                <div class="section-title">Timer Controls</div>
+                <div class="main-controls">
+                    <button class="btn btn-start" id="startBtn">Start</button>
+                    <button class="btn btn-pause" id="stopBtn">Pause</button>
+                    <button class="btn btn-reset" id="resetBtn">Reset</button>
+                </div>
+            </div>
+
+            <!-- ALERT CONTROLS -->
+            <div class="alert-section">
+                <div class="section-title">Alert Controls</div>
+                <div class="beep-controls">
+                    <button class="btn btn-beep" id="beep1Btn">1 Beep</button>
+                    <button class="btn btn-beep" id="beep2Btn">2 Beeps</button>
+                    <button class="btn btn-beep" id="beep3Btn">3 Beeps</button>
+                </div>
+                <div class="delay-controls">
+                    <input type="number" class="delay-input" id="delayInput" placeholder="15" min="1" max="300" value="15">
+                    <select class="delay-select" id="beepSelect">
+                        <option value="1">1 Beep</option>
+                        <option value="2">2 Beeps</option>
+                        <option value="3">3 Beeps</option>
+                    </select>
+                    <button class="btn btn-delay" id="delayBeepBtn">Schedule Alert</button>
+                </div>
+            </div>
+
+            <!-- NOTE SECTION -->
+            <div class="note-section">
+                <div class="section-title">Doctor Note</div>
+                <textarea class="note-input" id="noteInput" placeholder="Type message for doctor (e.g., 'Patient leaving', 'Next ready')" maxlength="50" rows="2"></textarea>
+            </div>
+
+            <!-- STATUS SECTION -->
+            <div class="status-section">
+                <div class="status-text" id="status">Ready to start</div>
+                
+                <div class="pending-alert" id="pendingAlert">
+                    <div class="pending-text" id="pendingText">Beep scheduled in 15 seconds...</div>
+                    <button class="btn-cancel" id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+
+            <!-- LARGE NOTE DISPLAY -->
+            <div class="note-display" id="noteDisplay">
+                <button class="note-close" id="noteClose">×</button>
+                <div class="note-text" id="noteText"></div>
+            </div>
+
+            <!-- TIME TO GO WARNING -->
+            <div class="warning-message" id="warningMessage">
+                <div class="warning-text">Time to Go</div>
+                <div class="warning-hebrew">הזמן ללכת</div>
             </div>
         </div>
 
-        <!-- MAIN CONTROLS -->
-        <div class="controls-section">
-            <div class="section-title">Timer Controls</div>
-            <div class="main-controls">
-                <button class="btn btn-start" id="startBtn">Start</button>
-                <button class="btn btn-pause" id="stopBtn">Pause</button>
-                <button class="btn btn-reset" id="resetBtn">Reset</button>
-            </div>
-        </div>
-
-        <!-- ALERT CONTROLS -->
-        <div class="alert-section">
-            <div class="section-title">Alert Controls</div>
-            <div class="beep-controls">
-                <button class="btn btn-beep" id="beep1Btn">1 Beep</button>
-                <button class="btn btn-beep" id="beep2Btn">2 Beeps</button>
-                <button class="btn btn-beep" id="beep3Btn">3 Beeps</button>
-            </div>
-            <div class="delay-controls">
-                <input type="number" class="delay-input" id="delayInput" placeholder="15" min="1" max="300" value="15">
-                <select class="delay-select" id="beepSelect">
-                    <option value="1">1 Beep</option>
-                    <option value="2">2 Beeps</option>
-                    <option value="3">3 Beeps</option>
-                </select>
-                <button class="btn btn-delay" id="delayBeepBtn">Schedule Alert</button>
-            </div>
-        </div>
-
-        <!-- NOTE SECTION -->
-        <div class="note-section">
-            <div class="section-title">Doctor Note</div>
-            <textarea class="note-input" id="noteInput" placeholder="Type message for doctor (e.g., 'Patient leaving', 'Next ready')" maxlength="50" rows="2"></textarea>
-        </div>
-
-        <!-- STATUS SECTION -->
-        <div class="status-section">
-            <div class="status-text" id="status">Ready to start</div>
+        <!-- BREAK TIMER TAB -->
+        <div class="tab-content" id="breakContent">
+            <div class="header">Break Timer</div>
             
-            <div class="pending-alert" id="pendingAlert">
-                <div class="pending-text" id="pendingText">Beep scheduled in 15 seconds...</div>
-                <button class="btn-cancel" id="cancelBtn">Cancel</button>
+            <!-- BREAK TIMER SECTION -->
+            <div class="timer-section">
+                <div class="timer-display" id="breakTimerDisplay">00:00.00</div>
+                <div class="edit-hint">Break duration tracking</div>
+                
+                <div class="status-indicator">
+                    <div class="status-fill" id="breakStatusFill"></div>
+                </div>
             </div>
-        </div>
 
-        <!-- LARGE NOTE DISPLAY -->
-        <div class="note-display" id="noteDisplay">
-            <button class="note-close" id="noteClose">×</button>
-            <div class="note-text" id="noteText"></div>
-        </div>
+            <!-- BREAK CONTROLS -->
+            <div class="controls-section">
+                <div class="section-title">Break Controls</div>
+                <div class="main-controls">
+                    <button class="btn btn-start" id="breakStartBtn">Start Break</button>
+                    <button class="btn btn-pause" id="breakStopBtn">End Break</button>
+                    <button class="btn btn-reset" id="breakResetBtn">Reset</button>
+                </div>
+            </div>
 
-        <!-- TIME TO GO WARNING -->
-        <div class="warning-message" id="warningMessage">
-            <div class="warning-text">Time to Go</div>
-            <div class="warning-hebrew">הזמן ללכת</div>
+            <!-- BREAK STATUS -->
+            <div class="status-section">
+                <div class="status-text" id="breakStatus">Ready for break</div>
+            </div>
+
+            <!-- BREAK MILESTONES -->
+            <div class="break-milestones" id="breakMilestones">
+                <div class="milestone-item">
+                    <span class="milestone-time">5 min</span>
+                    <span class="milestone-desc">Yellow + 1 beep</span>
+                </div>
+                <div class="milestone-item">
+                    <span class="milestone-time">10 min</span>
+                    <span class="milestone-desc">Red + 2 beeps</span>
+                </div>
+                <div class="milestone-item">
+                    <span class="milestone-time">15 min</span>
+                    <span class="milestone-desc">Flash + 3 beeps</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         class ProfessionalMedicalTimer {
             constructor() {
+                // Visit timer properties
                 this.startTime = 0;
                 this.elapsedTime = 0;
                 this.timerInterval = null;
@@ -628,9 +789,19 @@
                 this.isEditing = false;
                 this.delayTimeout = null;
                 
+                // Break timer properties
+                this.breakStartTime = 0;
+                this.breakElapsedTime = 0;
+                this.breakTimerInterval = null;
+                this.breakIsRunning = false;
+                
+                // Current active tab
+                this.activeTab = 'visit';
+                
                 this.initElements();
                 this.initEventListeners();
                 this.updateDisplay();
+                this.updateBreakDisplay();
                 this.updateDelayButtonText();
                 
                 this.alertsTriggered = {
@@ -639,9 +810,22 @@
                     30: false,
                     45: false
                 };
+                
+                this.breakAlertsTriggered = {
+                    5: false,
+                    10: false,
+                    15: false
+                };
             }
             
             initElements() {
+                // Tab elements
+                this.visitTab = document.getElementById('visitTab');
+                this.breakTab = document.getElementById('breakTab');
+                this.visitContent = document.getElementById('visitContent');
+                this.breakContent = document.getElementById('breakContent');
+                
+                // Visit timer elements
                 this.timerDisplay = document.getElementById('timerDisplay');
                 this.timeInput = document.getElementById('timeInput');
                 this.startBtn = document.getElementById('startBtn');
@@ -663,303 +847,338 @@
                 this.pendingAlert = document.getElementById('pendingAlert');
                 this.pendingText = document.getElementById('pendingText');
                 this.cancelBtn = document.getElementById('cancelBtn');
+                
+                // Break timer elements
+                this.breakTimerDisplay = document.getElementById('breakTimerDisplay');
+                this.breakStartBtn = document.getElementById('breakStartBtn');
+                this.breakStopBtn = document.getElementById('breakStopBtn');
+                this.breakResetBtn = document.getElementById('breakResetBtn');
+                this.breakStatus = document.getElementById('breakStatus');
+                this.breakStatusFill = document.getElementById('breakStatusFill');
+                
                 this.body = document.body;
             }
             
             initEventListeners() {
-                // Main controls
+                // Tab controls
+                this.visitTab.addEventListener('click', () => this.switchTab('visit'));
+                this.breakTab.addEventListener('click', () => this.switchTab('break'));
+                
+                // Visit timer controls
                 this.startBtn.addEventListener('click', () => this.start());
                 this.stopBtn.addEventListener('click', () => this.stop());
                 this.resetBtn.addEventListener('click', () => this.reset());
+                
+                // Break timer controls
+                this.breakStartBtn.addEventListener('click', () => this.startBreak());
+                this.breakStopBtn.addEventListener('click', () => this.stopBreak());
+                this.breakResetBtn.addEventListener('click', () => this.resetBreak());
                 
                 // Beep controls
                 this.beep1Btn.addEventListener('click', () => this.manualBeep(1));
                 this.beep2Btn.addEventListener('click', () => this.manualBeep(2));
                 this.beep3Btn.addEventListener('click', () => this.manualBeep(3));
                 
-                // Delay controls
+                // Delay beep controls
                 this.delayBeepBtn.addEventListener('click', () => this.scheduleDelayedBeep());
                 this.cancelBtn.addEventListener('click', () => this.cancelDelayedBeep());
                 this.delayInput.addEventListener('input', () => this.updateDelayButtonText());
                 this.beepSelect.addEventListener('change', () => this.updateDelayButtonText());
                 
-                // Timer editing
+                // Timer display editing
                 this.timerDisplay.addEventListener('click', () => this.startEditing());
                 this.timeInput.addEventListener('blur', () => this.finishEditing());
                 this.timeInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') this.finishEditing();
-                    else if (e.key === 'Escape') this.cancelEditing();
+                    if (e.key === 'Enter') {
+                        this.finishEditing();
+                    }
+                    if (e.key === 'Escape') {
+                        this.cancelEditing();
+                    }
                 });
                 
-                // Note functionality
+                // Note controls
+                this.noteInput.addEventListener('input', () => this.handleNoteInput());
                 this.noteInput.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
-                        this.showNote();
+                        this.showNoteDisplay();
                     }
                 });
-                this.noteClose.addEventListener('click', () => this.hideNote());
-                
-                // Prevent accidental navigation
-                window.addEventListener('beforeunload', (e) => {
-                    if (this.isRunning) {
-                        e.preventDefault();
-                        e.returnValue = 'Timer is running. Are you sure?';
-                    }
-                });
+                this.noteClose.addEventListener('click', () => this.hideNoteDisplay());
             }
             
+            // TAB SWITCHING
+            switchTab(tab) {
+                this.activeTab = tab;
+                
+                if (tab === 'visit') {
+                    this.visitTab.classList.add('active');
+                    this.breakTab.classList.remove('active');
+                    this.visitContent.classList.add('active');
+                    this.breakContent.classList.remove('active');
+                    this.updateBackgroundState();
+                } else {
+                    this.breakTab.classList.add('active');
+                    this.visitTab.classList.remove('active');
+                    this.breakContent.classList.add('active');
+                    this.visitContent.classList.remove('active');
+                    this.updateBreakBackgroundState();
+                }
+            }
+            
+            // VISIT TIMER METHODS
             start() {
                 if (!this.isRunning) {
                     this.startTime = Date.now() - this.elapsedTime;
-                    this.timerInterval = setInterval(() => this.updateTimer(), 10);
                     this.isRunning = true;
-                    this.startBtn.textContent = 'Active';
+                    this.timerInterval = setInterval(() => this.updateTimer(), 10);
                     this.startBtn.disabled = true;
-                    this.status.textContent = 'Timer running';
+                    this.status.textContent = 'Visit in progress...';
                 }
             }
             
             stop() {
                 if (this.isRunning) {
-                    clearInterval(this.timerInterval);
                     this.isRunning = false;
-                    this.startBtn.textContent = 'Resume';
+                    clearInterval(this.timerInterval);
                     this.startBtn.disabled = false;
-                    this.status.textContent = 'Timer paused';
+                    this.status.textContent = 'Visit paused';
                 }
             }
             
             reset() {
-                clearInterval(this.timerInterval);
                 this.isRunning = false;
+                clearInterval(this.timerInterval);
                 this.elapsedTime = 0;
-                this.startTime = 0;
-                this.startBtn.textContent = 'Start';
                 this.startBtn.disabled = false;
-                this.status.textContent = 'Ready to start';
-                this.warningMessage.style.display = 'none';
-                this.statusFill.style.width = '0%';
-                this.body.className = 'normal';
-                
-                // Cancel delayed beep
-                if (this.delayTimeout) {
-                    clearTimeout(this.delayTimeout);
-                    this.delayTimeout = null;
-                }
-                this.pendingAlert.style.display = 'none';
-                
-                // Reset alerts
-                Object.keys(this.alertsTriggered).forEach(key => {
-                    this.alertsTriggered[key] = false;
-                });
-                
                 this.updateDisplay();
+                this.status.textContent = 'Ready to start';
+                this.resetAlerts();
+                this.hideWarningMessage();
+                this.hideNoteDisplay();
+                this.updateBackgroundState();
             }
             
             updateTimer() {
-                this.elapsedTime = Date.now() - this.startTime;
-                this.updateDisplay();
-                this.updateProgressBar();
-                this.checkAlerts();
+                if (this.isRunning) {
+                    this.elapsedTime = Date.now() - this.startTime;
+                    this.updateDisplay();
+                    this.checkAlerts();
+                    this.updateBackgroundState();
+                }
             }
             
             updateDisplay() {
-                const totalMilliseconds = this.elapsedTime;
-                const totalSeconds = Math.floor(totalMilliseconds / 1000);
-                const minutes = Math.floor(totalSeconds / 60);
-                const seconds = totalSeconds % 60;
-                const centiseconds = Math.floor((totalMilliseconds % 1000) / 10);
-                
-                if (minutes >= 60) {
-                    const hours = Math.floor(minutes / 60);
-                    const displayMinutes = minutes % 60;
-                    this.timerDisplay.textContent = `${hours}:${displayMinutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
-                } else {
-                    this.timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
-                }
-            }
-            
-            updateProgressBar() {
-                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
-                let percentage = 0;
-                let color = '#10b981';
-                
-                if (minutes < 20) {
-                    percentage = (minutes / 20) * 100;
-                    color = '#10b981';
-                } else if (minutes < 30) {
-                    percentage = 100;
-                    color = '#f59e0b';
-                } else if (minutes < 45) {
-                    percentage = 100;
-                    color = '#ef4444';
-                } else {
-                    percentage = 100;
-                    color = '#dc2626';
-                }
-                
-                this.statusFill.style.width = `${Math.min(percentage, 100)}%`;
-                this.statusFill.style.background = `linear-gradient(90deg, ${color}, ${color})`;
-            }
-            
-            checkAlerts() {
-                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
-                
-                if (minutes >= 20 && !this.alertsTriggered[20]) {
-                    this.body.className = 'warning';
-                    this.alertsTriggered[20] = true;
-                    this.playBeeps(1);
-                }
-                
-                if (minutes >= 28 && !this.alertsTriggered[28]) {
-                    this.warningMessage.style.display = 'block';
-                    this.alertsTriggered[28] = true;
-                }
-                
-                if (minutes >= 30 && !this.alertsTriggered[30]) {
-                    this.body.className = 'danger';
-                    this.alertsTriggered[30] = true;
-                    this.playBeeps(2);
-                }
-                
-                if (minutes >= 45 && !this.alertsTriggered[45]) {
-                    this.body.className = 'critical';
-                    this.alertsTriggered[45] = true;
-                    this.playBeeps(3);
-                }
-            }
-            
-            // Timer editing methods
-            startEditing() {
-                if (this.isRunning) return;
-                
-                this.isEditing = true;
-                this.timerDisplay.style.display = 'none';
-                this.timeInput.style.display = 'block';
-                
                 const totalSeconds = Math.floor(this.elapsedTime / 1000);
                 const minutes = Math.floor(totalSeconds / 60);
                 const seconds = totalSeconds % 60;
-                this.timeInput.value = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                this.timeInput.focus();
-                this.timeInput.select();
+                const centiseconds = Math.floor((this.elapsedTime % 1000) / 10);
+                
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
+                this.timerDisplay.textContent = timeString;
+                
+                // Update progress bar (45 minutes = 100%)
+                const progressPercentage = Math.min((this.elapsedTime / (45 * 60 * 1000)) * 100, 100);
+                this.statusFill.style.width = `${progressPercentage}%`;
             }
             
-            finishEditing() {
-                if (!this.isEditing) return;
+            // BREAK TIMER METHODS
+            startBreak() {
+                if (!this.breakIsRunning) {
+                    this.breakStartTime = Date.now() - this.breakElapsedTime;
+                    this.breakIsRunning = true;
+                    this.breakTimerInterval = setInterval(() => this.updateBreakTimer(), 10);
+                    this.breakStartBtn.disabled = true;
+                    this.breakStatus.textContent = 'Break in progress...';
+                }
+            }
+            
+            stopBreak() {
+                if (this.breakIsRunning) {
+                    this.breakIsRunning = false;
+                    clearInterval(this.breakTimerInterval);
+                    this.breakStartBtn.disabled = false;
+                    this.breakStatus.textContent = 'Break ended';
+                }
+            }
+            
+            resetBreak() {
+                this.breakIsRunning = false;
+                clearInterval(this.breakTimerInterval);
+                this.breakElapsedTime = 0;
+                this.breakStartBtn.disabled = false;
+                this.updateBreakDisplay();
+                this.breakStatus.textContent = 'Ready for break';
+                this.resetBreakAlerts();
+                this.updateBreakBackgroundState();
+            }
+            
+            updateBreakTimer() {
+                if (this.breakIsRunning) {
+                    this.breakElapsedTime = Date.now() - this.breakStartTime;
+                    this.updateBreakDisplay();
+                    this.checkBreakAlerts();
+                    this.updateBreakBackgroundState();
+                }
+            }
+            
+            updateBreakDisplay() {
+                const totalSeconds = Math.floor(this.breakElapsedTime / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const centiseconds = Math.floor((this.breakElapsedTime % 1000) / 10);
                 
-                const timeValue = this.timeInput.value.trim();
-                const timeRegex = /^(\d{1,3}):([0-5]?\d)$/;
-                const match = timeValue.match(timeRegex);
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
+                this.breakTimerDisplay.textContent = timeString;
                 
-                if (match) {
-                    const minutes = parseInt(match[1]);
-                    const seconds = parseInt(match[2]);
-                    this.elapsedTime = (minutes * 60 + seconds) * 1000;
-                    this.updateDisplay();
-                    this.updateProgressBar();
-                    this.checkAlertsOnTimeChange();
+                // Update progress bar (15 minutes = 100%)
+                const progressPercentage = Math.min((this.breakElapsedTime / (15 * 60 * 1000)) * 100, 100);
+                this.breakStatusFill.style.width = `${progressPercentage}%`;
+            }
+            
+            // ALERT SYSTEM
+            checkAlerts() {
+                const minutes = Math.floor(this.elapsedTime / (60 * 1000));
+                
+                if (minutes >= 20 && !this.alertsTriggered[20]) {
+                    this.alertsTriggered[20] = true;
+                    this.playBeep(1);
                 }
                 
-                this.cancelEditing();
-            }
-            
-            cancelEditing() {
-                this.isEditing = false;
-                this.timerDisplay.style.display = 'block';
-                this.timeInput.style.display = 'none';
-            }
-            
-            checkAlertsOnTimeChange() {
-                Object.keys(this.alertsTriggered).forEach(key => {
-                    this.alertsTriggered[key] = false;
-                });
+                if (minutes >= 28 && !this.alertsTriggered[28]) {
+                    this.alertsTriggered[28] = true;
+                    this.playBeep(2);
+                }
                 
-                const minutes = Math.floor(this.elapsedTime / (1000 * 60));
+                if (minutes >= 30 && !this.alertsTriggered[30]) {
+                    this.alertsTriggered[30] = true;
+                    this.playBeep(3);
+                    this.showWarningMessage();
+                }
+                
+                if (minutes >= 45 && !this.alertsTriggered[45]) {
+                    this.alertsTriggered[45] = true;
+                    this.playBeep(3);
+                }
+            }
+            
+            checkBreakAlerts() {
+                const minutes = Math.floor(this.breakElapsedTime / (60 * 1000));
+                
+                if (minutes >= 5 && !this.breakAlertsTriggered[5]) {
+                    this.breakAlertsTriggered[5] = true;
+                    this.playBeep(1);
+                }
+                
+                if (minutes >= 10 && !this.breakAlertsTriggered[10]) {
+                    this.breakAlertsTriggered[10] = true;
+                    this.playBeep(2);
+                }
+                
+                if (minutes >= 15 && !this.breakAlertsTriggered[15]) {
+                    this.breakAlertsTriggered[15] = true;
+                    this.playBeep(3);
+                }
+            }
+            
+            resetAlerts() {
+                this.alertsTriggered = {
+                    20: false,
+                    28: false,
+                    30: false,
+                    45: false
+                };
+            }
+            
+            resetBreakAlerts() {
+                this.breakAlertsTriggered = {
+                    5: false,
+                    10: false,
+                    15: false
+                };
+            }
+            
+            // BACKGROUND STATE MANAGEMENT
+            updateBackgroundState() {
+                if (this.activeTab !== 'visit') return;
+                
+                const minutes = Math.floor(this.elapsedTime / (60 * 1000));
+                
+                this.body.className = '';
                 
                 if (minutes >= 45) {
-                    this.body.className = 'critical';
-                    this.warningMessage.style.display = 'block';
-                    this.alertsTriggered[20] = true;
-                    this.alertsTriggered[28] = true;
-                    this.alertsTriggered[30] = true;
-                    this.alertsTriggered[45] = true;
+                    this.body.classList.add('critical');
                 } else if (minutes >= 30) {
-                    this.body.className = 'danger';
-                    this.warningMessage.style.display = 'block';
-                    this.alertsTriggered[20] = true;
-                    this.alertsTriggered[28] = true;
-                    this.alertsTriggered[30] = true;
-                } else if (minutes >= 28) {
-                    this.body.className = 'warning';
-                    this.warningMessage.style.display = 'block';
-                    this.alertsTriggered[20] = true;
-                    this.alertsTriggered[28] = true;
+                    this.body.classList.add('danger');
                 } else if (minutes >= 20) {
-                    this.body.className = 'warning';
-                    this.alertsTriggered[20] = true;
+                    this.body.classList.add('warning');
                 } else {
-                    this.body.className = 'normal';
-                    this.warningMessage.style.display = 'none';
+                    this.body.classList.add('normal');
                 }
             }
             
-            // Beep control methods
+            updateBreakBackgroundState() {
+                if (this.activeTab !== 'break') return;
+                
+                const minutes = Math.floor(this.breakElapsedTime / (60 * 1000));
+                
+                this.body.className = '';
+                
+                if (minutes >= 15) {
+                    this.body.classList.add('break-critical');
+                } else if (minutes >= 10) {
+                    this.body.classList.add('break-danger');
+                } else if (minutes >= 5) {
+                    this.body.classList.add('break-warning');
+                } else {
+                    this.body.classList.add('normal');
+                }
+            }
+            
+            // AUDIO SYSTEM
+            playBeep(count) {
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.frequency.value = 800;
+                        oscillator.type = 'sine';
+                        
+                        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                        gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+                        gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.2);
+                        
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.2);
+                    }, i * 300);
+                }
+            }
+            
             manualBeep(count) {
-                this.playBeeps(count);
-                this.showButtonFeedback(count);
+                this.playBeep(count);
             }
             
-            showButtonFeedback(beepCount) {
-                const buttons = [this.beep1Btn, this.beep2Btn, this.beep3Btn];
-                const pressedBtn = buttons[beepCount - 1];
-                const originalText = pressedBtn.textContent;
-                
-                pressedBtn.textContent = 'Sent!';
-                pressedBtn.style.background = 'linear-gradient(135deg, #059669, #047857)';
-                
-                setTimeout(() => {
-                    pressedBtn.textContent = originalText;
-                    pressedBtn.style.background = 'linear-gradient(135deg, #8b5cf6, #7c3aed)';
-                }, 1000);
-            }
-            
-            // Delay control methods
-            updateDelayButtonText() {
-                const seconds = this.delayInput.value || '15';
-                const beepCount = this.beepSelect.value;
-                const beepText = beepCount === '1' ? 'beep' : 'beeps';
-                this.delayBeepBtn.textContent = `${beepCount} ${beepText} in ${seconds}s`;
-            }
-            
+            // DELAYED BEEP SYSTEM
             scheduleDelayedBeep() {
-                const seconds = parseInt(this.delayInput.value) || 15;
-                const beepCount = parseInt(this.beepSelect.value) || 1;
+                const delaySeconds = parseInt(this.delayInput.value) || 15;
+                const beepCount = parseInt(this.beepSelect.value);
                 
                 if (this.delayTimeout) {
                     clearTimeout(this.delayTimeout);
                 }
                 
-                const beepText = beepCount === 1 ? 'beep' : 'beeps';
-                this.pendingText.textContent = `${beepCount} ${beepText} scheduled in ${seconds} seconds...`;
-                this.pendingAlert.style.display = 'block';
-                
-                // Button feedback
-                const originalText = this.delayBeepBtn.textContent;
-                this.delayBeepBtn.textContent = 'Scheduled!';
-                this.delayBeepBtn.style.background = 'linear-gradient(135deg, #059669, #047857)';
-                
-                setTimeout(() => {
-                    this.delayBeepBtn.textContent = originalText;
-                    this.delayBeepBtn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
-                }, 1000);
+                this.showPendingAlert(delaySeconds, beepCount);
                 
                 this.delayTimeout = setTimeout(() => {
-                    this.playBeeps(beepCount);
-                    this.pendingAlert.style.display = 'none';
-                    this.delayTimeout = null;
-                }, seconds * 1000);
+                    this.playBeep(beepCount);
+                    this.hidePendingAlert();
+                }, delaySeconds * 1000);
             }
             
             cancelDelayedBeep() {
@@ -967,65 +1186,118 @@
                     clearTimeout(this.delayTimeout);
                     this.delayTimeout = null;
                 }
+                this.hidePendingAlert();
+            }
+            
+            showPendingAlert(delaySeconds, beepCount) {
+                this.pendingText.textContent = `${beepCount} beep${beepCount > 1 ? 's' : ''} scheduled in ${delaySeconds} seconds...`;
+                this.pendingAlert.style.display = 'block';
+            }
+            
+            hidePendingAlert() {
                 this.pendingAlert.style.display = 'none';
             }
             
-            // Note methods
-            showNote() {
-                const noteText = this.noteInput.value.trim();
-                if (noteText) {
-                    this.noteText.textContent = noteText;
-                    this.noteDisplay.style.display = 'block';
-                    this.noteInput.value = '';
+            updateDelayButtonText() {
+                const delaySeconds = parseInt(this.delayInput.value) || 15;
+                const beepCount = parseInt(this.beepSelect.value);
+                this.delayBeepBtn.textContent = `${delaySeconds}s - ${beepCount} beep${beepCount > 1 ? 's' : ''}`;
+            }
+            
+            // TIME EDITING
+            startEditing() {
+                if (!this.isRunning) {
+                    this.isEditing = true;
+                    this.timerDisplay.style.display = 'none';
+                    this.timeInput.style.display = 'block';
+                    this.timeInput.value = this.formatTimeForInput();
+                    this.timeInput.focus();
+                    this.timeInput.select();
                 }
             }
             
-            hideNote() {
+            finishEditing() {
+                if (this.isEditing) {
+                    const timeValue = this.timeInput.value;
+                    const parsedTime = this.parseTimeInput(timeValue);
+                    
+                    if (parsedTime !== null) {
+                        this.elapsedTime = parsedTime;
+                        this.updateDisplay();
+                    }
+                    
+                    this.exitEditMode();
+                }
+            }
+            
+            cancelEditing() {
+                this.exitEditMode();
+            }
+            
+            exitEditMode() {
+                this.isEditing = false;
+                this.timeInput.style.display = 'none';
+                this.timerDisplay.style.display = 'block';
+            }
+            
+            formatTimeForInput() {
+                const totalSeconds = Math.floor(this.elapsedTime / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            parseTimeInput(input) {
+                const timePattern = /^(\d{1,2}):(\d{2})$/;
+                const match = input.match(timePattern);
+                
+                if (match) {
+                    const minutes = parseInt(match[1]);
+                    const seconds = parseInt(match[2]);
+                    
+                    if (minutes >= 0 && seconds >= 0 && seconds < 60) {
+                        return (minutes * 60 + seconds) * 1000;
+                    }
+                }
+                
+                return null;
+            }
+            
+            // NOTE SYSTEM
+            handleNoteInput() {
+                const note = this.noteInput.value.trim();
+                if (note.length > 0) {
+                    this.noteInput.style.borderColor = '#3b82f6';
+                } else {
+                    this.noteInput.style.borderColor = '#e5e7eb';
+                }
+            }
+            
+            showNoteDisplay() {
+                const note = this.noteInput.value.trim();
+                if (note) {
+                    this.noteText.textContent = note;
+                    this.noteDisplay.style.display = 'block';
+                }
+            }
+            
+            hideNoteDisplay() {
                 this.noteDisplay.style.display = 'none';
             }
             
-            // Audio methods
-            playBeeps(count) {
-                try {
-                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    
-                    for (let i = 0; i < count; i++) {
-                        setTimeout(() => {
-                            const oscillator = audioContext.createOscillator();
-                            const gainNode = audioContext.createGain();
-                            
-                            oscillator.connect(gainNode);
-                            gainNode.connect(audioContext.destination);
-                            
-                            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                            gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
-                            
-                            oscillator.start();
-                            oscillator.stop(audioContext.currentTime + 0.2);
-                        }, i * 400);
-                    }
-                } catch (error) {
-                    console.log('Audio not supported');
-                }
+            // WARNING SYSTEM
+            showWarningMessage() {
+                this.warningMessage.style.display = 'block';
+            }
+            
+            hideWarningMessage() {
+                this.warningMessage.style.display = 'none';
             }
         }
         
         // Initialize the timer when page loads
         document.addEventListener('DOMContentLoaded', () => {
             new ProfessionalMedicalTimer();
-        });
-        
-        // Prevent context menu and zoom for cleaner experience
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        
-        document.addEventListener('wheel', e => {
-            if (e.ctrlKey) e.preventDefault();
-        }, { passive: false });
-        
-        document.addEventListener('keydown', e => {
-            if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
-                e.preventDefault();
-            }
         });
     </script>
 </body>
