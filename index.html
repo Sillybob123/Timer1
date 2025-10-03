@@ -36,7 +36,6 @@
             text-align: center;
         }
 
-        /* TAB NAVIGATION */
         .tab-navigation {
             display: flex;
             background: rgba(241, 245, 249, 0.8);
@@ -48,10 +47,10 @@
 
         .tab-btn {
             flex: 1;
-            padding: 12px 16px;
+            padding: 10px 12px;
             border: none;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -72,7 +71,6 @@
             color: #3b82f6;
         }
 
-        /* TAB CONTENT */
         .tab-content {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -96,7 +94,6 @@
             text-transform: uppercase;
         }
 
-        /* TIMER SECTION */
         .timer-section {
             margin-bottom: 24px;
             padding: 20px 16px;
@@ -116,7 +113,6 @@
             padding: 8px 12px;
             border-radius: 12px;
             transition: all 0.2s ease;
-            position: relative;
         }
 
         .timer-display:hover {
@@ -130,7 +126,7 @@
             font-weight: 800;
             color: #1e293b;
             margin: 16px 0;
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+            font-family: 'SF Mono', 'Monaco', monospace;
             background: rgba(59, 130, 246, 0.05);
             border: 2px solid #3b82f6;
             border-radius: 12px;
@@ -171,7 +167,6 @@
             box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
         }
 
-        /* CONTROLS SECTION */
         .controls-section {
             margin-bottom: 20px;
         }
@@ -204,8 +199,6 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
         }
 
         .btn:hover {
@@ -238,7 +231,6 @@
             color: white;
         }
 
-        /* ALERT CONTROLS */
         .alert-section {
             background: linear-gradient(135deg, #fefbf2 0%, #fef3c7 100%);
             border: 1px solid #fde68a;
@@ -312,7 +304,6 @@
             min-width: 100px;
         }
 
-        /* STATUS AND MESSAGES */
         .status-section {
             margin-bottom: 16px;
         }
@@ -359,7 +350,6 @@
             transform: translateY(-1px);
         }
 
-        /* NOTE SECTION */
         .note-section {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             border: 1px solid #bae6fd;
@@ -437,7 +427,6 @@
             transform: scale(1.1);
         }
 
-        /* WARNING MESSAGE */
         .warning-message {
             background: linear-gradient(135deg, #fef3c7, #fde68a);
             border: 2px solid #f59e0b;
@@ -467,7 +456,6 @@
             line-height: 1.1;
         }
 
-        /* BREAK TIMER SPECIFIC STYLES */
         .break-milestones {
             background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
             border: 1px solid #d1fae5;
@@ -500,7 +488,146 @@
             font-weight: 600;
         }
 
-        /* BACKGROUND STATES */
+        .history-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .stats-summary {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e40af;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .visit-list {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .visit-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .visit-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .visit-info {
+            flex: 1;
+        }
+
+        .visit-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .visit-time {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1e293b;
+            font-family: 'SF Mono', 'Monaco', monospace;
+        }
+
+        .visit-timestamp {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .btn-remove {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .btn-remove:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        .btn-clear-all {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            margin-top: 12px;
+        }
+
+        .btn-clear-all:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .chart-container {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            height: 250px;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
         .normal { 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -521,7 +648,6 @@
             animation: flash-red 1.2s infinite;
         }
 
-        /* BREAK TIMER STATES */
         .break-warning { 
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
         }
@@ -542,7 +668,6 @@
                 0 0 0 1px rgba(239, 68, 68, 0.3);
         }
 
-        /* ANIMATIONS */
         @keyframes flash-critical {
             0%, 60% { background: linear-gradient(135deg, #000000 0%, #1f2937 100%); }
             61%, 100% { background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%); }
@@ -575,85 +700,35 @@
                 0 0 0 1px rgba(239, 68, 68, 0.3);
         }
 
-        /* RESPONSIVE DESIGN */
         @media (max-width: 320px) {
             .timer-container {
                 padding: 16px 12px;
                 max-width: none;
             }
-
-            .main-controls {
+            .main-controls, .beep-controls {
                 gap: 6px;
             }
-
-            .beep-controls {
-                gap: 6px;
-            }
-
             .btn {
                 padding: 10px 6px;
                 font-size: 10px;
             }
-
             .delay-input {
                 width: 45px;
                 font-size: 12px;
             }
-            
             .delay-select {
                 font-size: 10px;
                 min-width: 65px;
             }
         }
 
-        @media (max-width: 280px) {
-            .main-controls {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-            .beep-controls {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-            .delay-controls {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .delay-input, .delay-select {
-                width: 100%;
-            }
-        }
-
-        @media (max-height: 600px) {
-            .timer-container {
-                padding: 16px;
-            }
-
-            .timer-section {
-                padding: 12px;
-                margin-bottom: 16px;
-            }
-
-            .alert-section, .note-section {
-                padding: 12px;
-            }
-        }
-
-        /* PREVENT TEXT SELECTION */
         body {
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
         }
 
         .timer-display, .time-input, .note-input {
             -webkit-user-select: all;
-            -moz-user-select: all;
-            -ms-user-select: all;
             user-select: all;
         }
     </style>
@@ -663,6 +738,7 @@
         <div class="tab-navigation">
             <button class="tab-btn active" id="visitTab">Patient Visit</button>
             <button class="tab-btn" id="breakTab">Break Timer</button>
+            <button class="tab-btn" id="historyTab">Visit History</button>
         </div>
 
         <div class="tab-content active" id="visitContent">
@@ -755,7 +831,7 @@
                 <div class="status-text" id="breakStatus">Ready for break</div>
             </div>
 
-            <div class="break-milestones" id="breakMilestones">
+            <div class="break-milestones">
                 <div class="milestone-item">
                     <span class="milestone-time">5 min</span>
                     <span class="milestone-desc">Yellow + 1 beep</span>
@@ -770,12 +846,43 @@
                 </div>
             </div>
         </div>
+
+        <div class="tab-content" id="historyContent">
+            <div class="header">Visit History</div>
+            
+            <div class="stats-summary">
+                <div class="section-title">Today's Summary</div>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalVisits">0</div>
+                        <div class="stat-label">Total Visits</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgTime">--:--</div>
+                        <div class="stat-label">Avg Time</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="visitChart"></canvas>
+            </div>
+
+            <div class="history-container">
+                <div class="section-title" style="margin-top: 16px;">Visit Log</div>
+                <div class="visit-list" id="visitList">
+                    <div class="no-data">No visits recorded yet</div>
+                </div>
+            </div>
+
+            <button class="btn-clear-all" id="clearAllBtn">Clear All History</button>
+        </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
         class ProfessionalMedicalTimer {
             constructor() {
-                // Visit timer properties
                 this.startTime = 0;
                 this.elapsedTime = 0;
                 this.timerInterval = null;
@@ -783,13 +890,13 @@
                 this.isEditing = false;
                 this.delayTimeout = null;
                 
-                // Break timer properties
                 this.breakStartTime = 0;
                 this.breakElapsedTime = 0;
                 this.breakTimerInterval = null;
                 this.breakIsRunning = false;
                 
-                // Current active tab
+                this.visits = [];
+                this.chart = null;
                 this.activeTab = 'visit';
                 
                 this.initElements();
@@ -797,6 +904,8 @@
                 this.updateDisplay();
                 this.updateBreakDisplay();
                 this.updateDelayButtonText();
+                this.updateHistoryDisplay();
+                this.initChart();
                 
                 this.alertsTriggered = {
                     15: false,
@@ -813,13 +922,13 @@
             }
             
             initElements() {
-                // Tab elements
                 this.visitTab = document.getElementById('visitTab');
                 this.breakTab = document.getElementById('breakTab');
+                this.historyTab = document.getElementById('historyTab');
                 this.visitContent = document.getElementById('visitContent');
                 this.breakContent = document.getElementById('breakContent');
+                this.historyContent = document.getElementById('historyContent');
                 
-                // Visit timer elements
                 this.timerDisplay = document.getElementById('timerDisplay');
                 this.timeInput = document.getElementById('timeInput');
                 this.startBtn = document.getElementById('startBtn');
@@ -842,7 +951,6 @@
                 this.pendingText = document.getElementById('pendingText');
                 this.cancelBtn = document.getElementById('cancelBtn');
                 
-                // Break timer elements
                 this.breakTimerDisplay = document.getElementById('breakTimerDisplay');
                 this.breakStartBtn = document.getElementById('breakStartBtn');
                 this.breakStopBtn = document.getElementById('breakStopBtn');
@@ -850,36 +958,37 @@
                 this.breakStatus = document.getElementById('breakStatus');
                 this.breakStatusFill = document.getElementById('breakStatusFill');
                 
+                this.totalVisits = document.getElementById('totalVisits');
+                this.avgTime = document.getElementById('avgTime');
+                this.visitList = document.getElementById('visitList');
+                this.clearAllBtn = document.getElementById('clearAllBtn');
+                this.visitChart = document.getElementById('visitChart');
+                
                 this.body = document.body;
             }
             
             initEventListeners() {
-                // Tab controls
                 this.visitTab.addEventListener('click', () => this.switchTab('visit'));
                 this.breakTab.addEventListener('click', () => this.switchTab('break'));
+                this.historyTab.addEventListener('click', () => this.switchTab('history'));
                 
-                // Visit timer controls
                 this.startBtn.addEventListener('click', () => this.start());
                 this.stopBtn.addEventListener('click', () => this.stop());
                 this.resetBtn.addEventListener('click', () => this.reset());
                 
-                // Break timer controls
                 this.breakStartBtn.addEventListener('click', () => this.startBreak());
                 this.breakStopBtn.addEventListener('click', () => this.stopBreak());
                 this.breakResetBtn.addEventListener('click', () => this.resetBreak());
                 
-                // Beep controls
                 this.beep1Btn.addEventListener('click', () => this.manualBeep(1));
                 this.beep2Btn.addEventListener('click', () => this.manualBeep(2));
                 this.beep3Btn.addEventListener('click', () => this.manualBeep(3));
                 
-                // Delay beep controls
                 this.delayBeepBtn.addEventListener('click', () => this.scheduleDelayedBeep());
                 this.cancelBtn.addEventListener('click', () => this.cancelDelayedBeep());
                 this.delayInput.addEventListener('input', () => this.updateDelayButtonText());
                 this.beepSelect.addEventListener('change', () => this.updateDelayButtonText());
                 
-                // Timer display editing
                 this.timerDisplay.addEventListener('click', () => this.startEditing());
                 this.timeInput.addEventListener('blur', () => this.finishEditing());
                 this.timeInput.addEventListener('keydown', (e) => {
@@ -891,7 +1000,6 @@
                     }
                 });
                 
-                // Note controls
                 this.noteInput.addEventListener('input', () => this.handleNoteInput());
                 this.noteInput.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
@@ -900,28 +1008,40 @@
                     }
                 });
                 this.noteClose.addEventListener('click', () => this.hideNoteDisplay());
+                
+                this.clearAllBtn.addEventListener('click', () => this.clearAllVisits());
             }
             
-            // TAB SWITCHING
             switchTab(tab) {
                 this.activeTab = tab;
                 
                 if (tab === 'visit') {
                     this.visitTab.classList.add('active');
                     this.breakTab.classList.remove('active');
+                    this.historyTab.classList.remove('active');
                     this.visitContent.classList.add('active');
                     this.breakContent.classList.remove('active');
+                    this.historyContent.classList.remove('active');
                     this.updateBackgroundState();
-                } else {
+                } else if (tab === 'break') {
                     this.breakTab.classList.add('active');
                     this.visitTab.classList.remove('active');
+                    this.historyTab.classList.remove('active');
                     this.breakContent.classList.add('active');
                     this.visitContent.classList.remove('active');
+                    this.historyContent.classList.remove('active');
                     this.updateBreakBackgroundState();
+                } else if (tab === 'history') {
+                    this.historyTab.classList.add('active');
+                    this.visitTab.classList.remove('active');
+                    this.breakTab.classList.remove('active');
+                    this.historyContent.classList.add('active');
+                    this.visitContent.classList.remove('active');
+                    this.breakContent.classList.remove('active');
+                    this.body.className = 'normal';
                 }
             }
             
-            // VISIT TIMER METHODS
             start() {
                 if (!this.isRunning) {
                     this.startTime = Date.now() - this.elapsedTime;
@@ -942,6 +1062,10 @@
             }
             
             reset() {
+                if (this.elapsedTime > 0) {
+                    this.saveVisit(this.elapsedTime);
+                }
+                
                 this.isRunning = false;
                 clearInterval(this.timerInterval);
                 this.elapsedTime = 0;
@@ -972,12 +1096,10 @@
                 const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
                 this.timerDisplay.textContent = timeString;
                 
-                // Update progress bar (30 minutes = 100%)
                 const progressPercentage = Math.min((this.elapsedTime / (30 * 60 * 1000)) * 100, 100);
                 this.statusFill.style.width = `${progressPercentage}%`;
             }
             
-            // BREAK TIMER METHODS
             startBreak() {
                 if (!this.breakIsRunning) {
                     this.breakStartTime = Date.now() - this.breakElapsedTime;
@@ -1026,12 +1148,10 @@
                 const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
                 this.breakTimerDisplay.textContent = timeString;
                 
-                // Update progress bar (15 minutes = 100%)
                 const progressPercentage = Math.min((this.breakElapsedTime / (15 * 60 * 1000)) * 100, 100);
                 this.breakStatusFill.style.width = `${progressPercentage}%`;
             }
             
-            // ALERT SYSTEM
             checkAlerts() {
                 const minutes = Math.floor(this.elapsedTime / (60 * 1000));
                 
@@ -1093,13 +1213,12 @@
                 };
             }
             
-            // BACKGROUND STATE MANAGEMENT
             updateBackgroundState() {
                 if (this.activeTab !== 'visit') return;
                 
                 const minutes = Math.floor(this.elapsedTime / (60 * 1000));
                 
-                this.body.className = ''; // Clear existing classes
+                this.body.className = '';
                 
                 if (minutes >= 30) {
                     this.body.classList.add('critical');
@@ -1132,7 +1251,6 @@
                 }
             }
             
-            // AUDIO SYSTEM
             playBeep(count) {
                 for (let i = 0; i < count; i++) {
                     setTimeout(() => {
@@ -1152,7 +1270,7 @@
                         
                         oscillator.start(audioContext.currentTime);
                         oscillator.stop(audioContext.currentTime + 0.2);
-                    }, i * 350); // Increased delay between beeps
+                    }, i * 350);
                 }
             }
             
@@ -1160,7 +1278,6 @@
                 this.playBeep(count);
             }
             
-            // DELAYED BEEP SYSTEM
             scheduleDelayedBeep() {
                 const delaySeconds = parseInt(this.delayInput.value) || 15;
                 const beepCount = parseInt(this.beepSelect.value);
@@ -1200,7 +1317,6 @@
                 this.delayBeepBtn.textContent = `${delaySeconds}s - ${beepCount} beep${beepCount > 1 ? 's' : ''}`;
             }
             
-            // TIME EDITING
             startEditing() {
                 if (!this.isRunning) {
                     this.isEditing = true;
@@ -1259,7 +1375,6 @@
                 return null;
             }
             
-            // NOTE SYSTEM
             handleNoteInput() {
                 const note = this.noteInput.value.trim();
                 if (note.length > 0) {
@@ -1281,7 +1396,6 @@
                 this.noteDisplay.style.display = 'none';
             }
             
-            // WARNING SYSTEM
             showWarningMessage() {
                 this.warningMessage.style.display = 'block';
             }
@@ -1289,11 +1403,131 @@
             hideWarningMessage() {
                 this.warningMessage.style.display = 'none';
             }
+            
+            saveVisit(duration) {
+                const visit = {
+                    id: Date.now(),
+                    duration: duration,
+                    timestamp: new Date().toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit',
+                        hour12: true 
+                    })
+                };
+                
+                this.visits.push(visit);
+                this.updateHistoryDisplay();
+            }
+            
+            removeVisit(id) {
+                this.visits = this.visits.filter(v => v.id !== id);
+                this.updateHistoryDisplay();
+            }
+            
+            clearAllVisits() {
+                if (confirm('Clear all visit history? This cannot be undone.')) {
+                    this.visits = [];
+                    this.updateHistoryDisplay();
+                }
+            }
+            
+            updateHistoryDisplay() {
+                this.totalVisits.textContent = this.visits.length;
+                
+                if (this.visits.length > 0) {
+                    const avgMs = this.visits.reduce((sum, v) => sum + v.duration, 0) / this.visits.length;
+                    const avgMinutes = Math.floor(avgMs / 60000);
+                    const avgSeconds = Math.floor((avgMs % 60000) / 1000);
+                    this.avgTime.textContent = `${avgMinutes.toString().padStart(2, '0')}:${avgSeconds.toString().padStart(2, '0')}`;
+                } else {
+                    this.avgTime.textContent = '--:--';
+                }
+                
+                if (this.visits.length === 0) {
+                    this.visitList.innerHTML = '<div class="no-data">No visits recorded yet</div>';
+                } else {
+                    this.visitList.innerHTML = this.visits.map((visit, index) => {
+                        const minutes = Math.floor(visit.duration / 60000);
+                        const seconds = Math.floor((visit.duration % 60000) / 1000);
+                        const timeStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        
+                        return `
+                            <div class="visit-item">
+                                <div class="visit-info">
+                                    <div class="visit-number">Visit #${this.visits.length - index}</div>
+                                    <div class="visit-time">${timeStr}</div>
+                                    <div class="visit-timestamp">${visit.timestamp}</div>
+                                </div>
+                                <button class="btn-remove" onclick="timer.removeVisit(${visit.id})">Remove</button>
+                            </div>
+                        `;
+                    }).reverse().join('');
+                }
+                
+                this.updateChart();
+            }
+            
+            initChart() {
+                const ctx = this.visitChart.getContext('2d');
+                this.chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'Visit Duration (minutes)',
+                            data: [],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Visit Duration Throughout Day'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Minutes'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Visit Number'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            updateChart() {
+                if (!this.chart) return;
+                
+                const labels = this.visits.map((_, i) => `#${i + 1}`);
+                const data = this.visits.map(v => (v.duration / 60000).toFixed(2));
+                
+                this.chart.data.labels = labels;
+                this.chart.data.datasets[0].data = data;
+                this.chart.update();
+            }
         }
         
-        // Initialize the timer when page loads
+        let timer;
         document.addEventListener('DOMContentLoaded', () => {
-            new ProfessionalMedicalTimer();
+            timer = new ProfessionalMedicalTimer();
         });
     </script>
 </body>
